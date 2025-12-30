@@ -11,7 +11,7 @@ import {
   FaLeaf, 
   FaUsers 
 } from 'react-icons/fa';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 // Counter component with animation
 function Counter({ target, suffix = '', decimals = 0 }: { target: number; suffix?: string; decimals?: number }) {
