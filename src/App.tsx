@@ -3,8 +3,6 @@ import { useScrollAnimation } from './hooks/useScrollAnimation';
 import GlassCard from './components/ui/GlassCard';
 import GradientText from './components/ui/GradientText';
 import NoiseTexture from './components/graphics/NoiseTexture';
-import CircuitPattern from './components/graphics/CircuitPattern';
-import CityWireframe from './components/graphics/CityWireframe';
 import { 
   FaBolt, 
   FaNetworkWired, 
@@ -121,9 +119,6 @@ function App() {
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-deep-black via-graphite to-deep-black" />
           
-          {/* City Wireframe Animation */}
-          <CityWireframe />
-          
           <motion.div 
             animate={{
               scale: [1, 1.2, 1],
@@ -160,9 +155,6 @@ function App() {
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-plasma-purple/10 rounded-full blur-3xl"
           />
         </div>
-
-        {/* Circuit Pattern */}
-        <CircuitPattern />
 
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
