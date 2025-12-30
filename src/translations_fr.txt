@@ -1,0 +1,69 @@
+# Services Section
+"What We Do" → "Ce Que Nous Faisons"
+"End-to-End" → "Solutions Complètes"
+"Energy & Digital" → "Énergie & Numérique"
+"Solutions" → "Solutions"
+"Comprehensive solutions that bridge the gap between traditional energy and the digital future" → "Des solutions complètes qui font le pont entre l'énergie traditionnelle et l'avenir numérique"
+
+# Service 1
+"Smart Grid Solutions" → "Solutions Réseau Intelligent"
+"Intelligent Power Distribution" → "Distribution Électrique Intelligente"
+"We design, build, and optimize smart electrical grids" → "Nous concevons, construisons et optimisons des réseaux électriques intelligents"
+"SCADA & Telecontrol Systems" → "Systèmes SCADA & Téléconduite"
+"HV/MV/LV Network Integration" → "Intégration Réseau HT/MT/BT"
+"Real-time Grid Analytics" → "Analytique Réseau en Temps Réel"
+"Cybersecurity Infrastructure" → "Infrastructure de Cybersécurité"
+
+# Service 2
+"Digital Infrastructure" → "Infrastructure Numérique"
+"Technology That Powers Progress" → "Technologie Qui Alimente le Progrès"
+"From cloud architecture to custom software" → "De l'architecture cloud aux logiciels personnalisés"
+"IoT Platform Development" → "Développement Plateforme IoT"
+"Energy Management Systems" → "Systèmes de Gestion Énergétique"
+"Data Analytics & BI" → "Analytique de Données & BI"
+"Cloud & Edge Computing" → "Cloud & Edge Computing"
+
+# Service 3
+"Sustainable Integration" → "Intégration Durable"
+"Clean Energy, Smart Implementation" → "Énergie Propre, Mise en Œuvre Intelligente"
+"Solar, wind, hybrid systems" → "Systèmes solaires, éoliens, hybrides"
+"Renewable Integration" → "Intégration des Énergies Renouvelables"
+"Energy Storage Systems" → "Systèmes de Stockage d'Énergie"
+"Microgrid Solutions" → "Solutions de Micro-réseaux"
+"Carbon Monitoring" → "Suivi Carbone"
+
+"Learn More" → "En Savoir Plus"
+
+# Vision
+"Our" → "Notre"
+"Vision for 2030" → "Vision pour 2030"
+"A fully connected, sustainable energy network across Africa" → "Un réseau énergétique durable et entièrement connecté à travers l'Afrique"
+"clean, reliable, and intelligently distributed" → "propre, fiable et intelligemment distribuée"
+
+# Values
+"What" → "Ce Qui"
+"Drives Us" → "Nous Anime"
+"Innovation" → "Innovation"
+"We don't follow trends — we create them" → "Nous ne suivons pas les tendances — nous les créons"
+"Reliability" → "Fiabilité"
+"99.8% uptime isn't a goal. It's our standard" → "99,8% de disponibilité n'est pas un objectif. C'est notre standard"
+"Sustainability" → "Durabilité"
+"Clean energy isn't optional. It's essential" → "L'énergie propre n'est pas optionnelle. Elle est essentielle"
+"Partnership" → "Partenariat"
+"Your success is our mission" → "Votre succès est notre mission"
+
+# CTA
+"Ready to Power" → "Prêt à Alimenter"
+"Your Future?" → "Votre Avenir ?"
+"Let's discuss how our solutions can transform your energy infrastructure" → "Discutons de la façon dont nos solutions peuvent transformer votre infrastructure énergétique"
+"Schedule Consultation" → "Planifier une Consultation"
+"Download Case Studies" → "Télécharger les Études de Cas"
+
+# Footer
+"Energizing Africa's Future Through Innovation & Technology" → "Énergiser l'Avenir de l'Afrique par l'Innovation et la Technologie"
+"Smart Grid" → "Réseau Intelligent"
+"About Us" → "À Propos"
+"Vision" → "Vision"
+"Careers" → "Carrières"
+"Contact" → "Contact"
+"All rights reserved" → "Tous droits réservés"

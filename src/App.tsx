@@ -1,418 +1,809 @@
-function App() {
+import { motion, AnimatePresence } from 'framer-motion';
+import { useScrollAnimation } from './hooks/useScrollAnimation';
+import GlassCard from './components/ui/GlassCard';
+import GradientText from './components/ui/GradientText';
+import NoiseTexture from './components/graphics/NoiseTexture';
+import CircuitPattern from './components/graphics/CircuitPattern';
+import CityWireframe from './components/graphics/CityWireframe';
+import { 
+  FaBolt, 
+  FaNetworkWired, 
+  FaSolarPanel, 
+  FaShieldAlt, 
+  FaLeaf, 
+  FaUsers 
+} from 'react-icons/fa';
+import { useEffect, useState, useRef } from 'react';
+
+// Animated rotating words component
+function AnimatedWord() {
+  const words = ['ÉNERGISER', 'ÉLECTRIFIER', 'DÉVELOPPER', 'FAIRE BOUGER LES CHOSES'];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % words.length);
+    }, 1500); // Change tous les 1.5 secondes (plus rapide)
+
+    return () => clearInterval(interval);
+  }, [words.length]);
+
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation - Ultra Clean */}
-      <nav className="fixed w-full bg-white/95 backdrop-blur-sm border-b border-digita-gray-200 z-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-5 flex justify-between items-center">
-          <div className="text-xl font-semibold tracking-tight text-digita-dark">
-            DIGITA <span className="text-digita-green font-bold">ENERGY</span>
-          </div>
-          <div className="hidden md:flex gap-10 items-center">
-            <a href="#about" className="text-sm font-medium text-digita-gray-600 hover:text-digita-green transition-colors duration-200">
-              À propos
-            </a>
-            <a href="#services" className="text-sm font-medium text-digita-gray-600 hover:text-digita-green transition-colors duration-200">
-              Services
-            </a>
-            <a href="#values" className="text-sm font-medium text-digita-gray-600 hover:text-digita-green transition-colors duration-200">
-              Valeurs
-            </a>
-            <button className="bg-digita-green hover:bg-digita-green-700 text-white px-7 py-2.5 rounded-md text-sm font-medium transition-all duration-200">
-              Contact
-            </button>
-          </div>
-        </div>
-      </nav>
+    <div className="block text-4xl md:text-5xl lg:text-6xl font-bold leading-none relative h-[1.2em] overflow-hidden">
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={currentIndex}
+          initial={{ y: '100%', opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: '-100%', opacity: 0 }}
+          transition={{ 
+            duration: 0.25,
+            ease: [0.4, 0, 0.2, 1]
+          }}
+          className="absolute inset-0 flex items-center justify-center"
+        >
+          {words[currentIndex]}
+        </motion.span>
+      </AnimatePresence>
+    </div>
+  );
+}
 
-      {/* Hero Section - Video Background */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Video Background */}
-        <div className="absolute inset-0 w-full h-full">
-          <video 
-            autoPlay 
-            loop 
-            muted 
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source src="/modern-website/assets/hero-video-2.mp4" type="video/mp4" />
-          </video>
-          {/* Gradient Overlay for readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-digita-dark/80 via-digita-dark/50 to-transparent"></div>
-        </div>
+function App() {
+  const [scrollY, setScrollY] = useState(0);
 
-        {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <h1 className="text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              Acteur de la Transition
-              <span className="block text-digita-green mt-2">Énergétique & Numérique</span>
-            </h1>
-            <p className="text-xl lg:text-2xl text-white/90 mb-10 leading-relaxed font-light">
-              Dans un monde en évolution permanente, nous développons des solutions performantes pour l'énergie et le numérique de demain.
-            </p>
-            <div className="flex gap-4 flex-wrap">
-              <button className="bg-digita-green hover:bg-digita-green-700 text-white px-10 py-4 rounded-md text-base font-medium transition-all duration-200 shadow-lg hover:shadow-xl">
-                Découvrir nos services
-              </button>
-              <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-10 py-4 rounded-md text-base font-medium transition-all duration-200 border border-white/30">
-                En savoir plus
-              </button>
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-deep-black text-white font-body overflow-x-hidden">
+      {/* Noise Texture Overlay */}
+      <NoiseTexture />
+      
+      {/* Navigation */}
+      <motion.nav 
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className="fixed w-full z-50 transition-all duration-300"
+      >
+        <div 
+          className={`
+            backdrop-blur-xl transition-all duration-300
+            ${scrollY > 50 ? 'bg-deep-black/80 border-b border-white/10' : 'bg-transparent'}
+          `}
+        >
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex justify-between items-center">
+            <motion.div 
+              className="text-2xl font-display font-bold tracking-tight"
+              whileHover={{ scale: 1.05 }}
+            >
+              DIGITA <GradientText>ENERGY</GradientText>
+            </motion.div>
+            
+            <div className="hidden md:flex gap-8 items-center">
+              <a 
+                href="#about" 
+                className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200"
+              >
+                À propos
+              </a>
+              <a 
+                href="#services" 
+                className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200"
+              >
+                Solutions
+              </a>
+              <a 
+                href="#vision" 
+                className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200"
+              >
+                Vision
+              </a>
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative bg-energy-gradient px-6 py-2.5 rounded-lg text-sm font-bold text-deep-black overflow-hidden group"
+              >
+                <span className="relative z-10">Contact</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-cyber-blue to-energy-green opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </motion.button>
             </div>
           </div>
+        </div>
+      </motion.nav>
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Gradient Mesh Background */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-deep-black via-graphite to-deep-black" />
+          
+          {/* City Wireframe Animation */}
+          <CityWireframe />
+          
+          <motion.div 
+            animate={{
+              scale: [1, 1.2, 1],
+              rotate: [0, 90, 0],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute top-1/4 -left-1/4 w-96 h-96 bg-energy-green/20 rounded-full blur-3xl"
+          />
+          <motion.div 
+            animate={{
+              scale: [1, 1.3, 1],
+              rotate: [0, -90, 0],
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-cyber-blue/20 rounded-full blur-3xl"
+          />
+          <motion.div 
+            animate={{
+              scale: [1.2, 1, 1.2],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-plasma-purple/10 rounded-full blur-3xl"
+          />
+        </div>
+
+        {/* Circuit Pattern */}
+        <CircuitPattern />
+
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <motion.div 
+              className="inline-block px-4 py-2 mb-8 backdrop-blur-sm bg-white/5 border border-energy-green/30 rounded-full"
+              animate={{ 
+                boxShadow: [
+                  '0 0 20px rgba(0, 255, 135, 0.3)',
+                  '0 0 40px rgba(0, 255, 135, 0.5)',
+                  '0 0 20px rgba(0, 255, 135, 0.3)',
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <span className="text-energy-green text-sm font-bold tracking-wider">
+                ⚡ ALIMENTER L'AVENIR NUMÉRIQUE DE L'AFRIQUE
+              </span>
+            </motion.div>
+          </motion.div>
+
+          <motion.h1 
+            className="font-display font-bold mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <AnimatedWord />
+            <GradientText>
+              <span className="block text-4xl md:text-5xl lg:text-6xl font-bold leading-none mt-2 text-center">
+                L'AVENIR DE L'AFRIQUE
+              </span>
+            </GradientText>
+          </motion.h1>
+
+
+
+          <motion.div 
+            className="flex gap-4 justify-center flex-wrap"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(0, 255, 135, 0.5)' }}
+              whileTap={{ scale: 0.95 }}
+              className="relative px-10 py-4 bg-energy-gradient rounded-lg font-bold text-deep-black text-lg overflow-hidden group"
+            >
+              <span className="relative z-10">Découvrir nos solutions</span>
+            </motion.button>
+            
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-10 py-4 backdrop-blur-sm bg-white/5 border-2 border-white/20 rounded-lg font-bold text-lg hover:bg-white/10 hover:border-energy-green/50 transition-all duration-300"
+            >
+              Démarrer votre projet →
+            </motion.button>
+          </motion.div>
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10">
-          <div className="flex flex-col items-center gap-2 text-white/70">
-            <span className="text-xs font-medium">Scroll</span>
-            <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
-              <div className="w-1 h-3 bg-white/50 rounded-full animate-bounce"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section - Clean Layout */}
-      <section id="about" className="py-24 lg:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left: Image */}
-            <div className="relative">
-              <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
-                <img 
-                  src="/modern-website/assets/team-collaboration.jpg" 
-                  alt="Équipe Digita Energy"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {/* Accent Element */}
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-digita-green/10 rounded-lg -z-10"></div>
-            </div>
-
-            {/* Right: Content */}
-            <div>
-              <div className="inline-block px-4 py-1.5 bg-digita-green/10 text-digita-green text-sm font-medium rounded-full mb-6">
-                Qui sommes-nous ?
-              </div>
-              <h2 className="text-4xl lg:text-5xl font-bold text-digita-dark mb-6 leading-tight">
-                Une entreprise qui bâtit et développe
-              </h2>
-              <div className="space-y-4 text-digita-gray-600 text-lg leading-relaxed">
-                <p>
-                  Digita Energy se positionne comme un acteur principal de développement de nouveaux modèles pour concrétiser deux axes majeurs : <strong className="text-digita-dark">la transition énergétique et la transformation numérique.</strong>
-                </p>
-                <p>
-                  Nous développons des solutions performantes et innovantes en nous appuyant sur notre expertise de ces deux cœurs de métiers indispensables pour la société d'aujourd'hui et de demain.
-                </p>
-              </div>
-              <div className="mt-8 flex gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-digita-green/10 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-digita-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-digita-dark font-medium">Transition énergétique</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-digita-green/10 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-digita-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-digita-dark font-medium">Transformation numérique</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section - Image-Heavy */}
-      <section id="services" className="py-24 lg:py-32 bg-digita-gray-100">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          {/* Section Header */}
-          <div className="text-center mb-20">
-            <div className="inline-block px-4 py-1.5 bg-white text-digita-green text-sm font-medium rounded-full mb-6">
-              Nos services
-            </div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-digita-dark mb-4">
-              Expertise & Solutions
-            </h2>
-            <p className="text-xl text-digita-gray-600 max-w-3xl mx-auto">
-              Des solutions complètes pour répondre à vos enjeux énergétiques et numériques
-            </p>
-          </div>
-
-          {/* Service Cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Service 1: Énergie */}
-            <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
-              <div className="aspect-[4/3] overflow-hidden relative">
-                <img 
-                  src="/modern-website/assets/hero-energy-infrastructure.jpg" 
-                  alt="Infrastructure Énergétique"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-digita-dark/60 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-2xl font-bold text-white">Énergie</h3>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-digita-gray-600 mb-4 leading-relaxed">
-                  Solutions SmartGrid, infrastructure électrique, et building solutions pour un avenir énergétique durable.
-                </p>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center gap-2 text-sm text-digita-gray-600">
-                    <span className="w-1.5 h-1.5 bg-digita-green rounded-full"></span>
-                    Intégrateur SmartGrid
-                  </li>
-                  <li className="flex items-center gap-2 text-sm text-digita-gray-600">
-                    <span className="w-1.5 h-1.5 bg-digita-green rounded-full"></span>
-                    Infrastructure électrique
-                  </li>
-                  <li className="flex items-center gap-2 text-sm text-digita-gray-600">
-                    <span className="w-1.5 h-1.5 bg-digita-green rounded-full"></span>
-                    Building Solutions
-                  </li>
-                </ul>
-                <button className="text-digita-green hover:text-digita-green-700 font-medium text-sm flex items-center gap-2 group">
-                  En savoir plus
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            {/* Service 2: Numérique */}
-            <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
-              <div className="aspect-[4/3] overflow-hidden relative">
-                <img 
-                  src="/modern-website/assets/data-center-servers.jpg" 
-                  alt="Infrastructure Numérique"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-digita-dark/60 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-2xl font-bold text-white">Numérique</h3>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-digita-gray-600 mb-4 leading-relaxed">
-                  Transformation digitale, développement web & logiciel, et gouvernance SI pour votre entreprise.
-                </p>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center gap-2 text-sm text-digita-gray-600">
-                    <span className="w-1.5 h-1.5 bg-digita-green rounded-full"></span>
-                    Transformation numérique
-                  </li>
-                  <li className="flex items-center gap-2 text-sm text-digita-gray-600">
-                    <span className="w-1.5 h-1.5 bg-digita-green rounded-full"></span>
-                    Développement web & logiciel
-                  </li>
-                  <li className="flex items-center gap-2 text-sm text-digita-gray-600">
-                    <span className="w-1.5 h-1.5 bg-digita-green rounded-full"></span>
-                    Audit & Conseil
-                  </li>
-                </ul>
-                <button className="text-digita-green hover:text-digita-green-700 font-medium text-sm flex items-center gap-2 group">
-                  En savoir plus
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            {/* Service 3: Communication */}
-            <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
-              <div className="aspect-[4/3] overflow-hidden relative">
-                <img 
-                  src="/modern-website/assets/control-room-monitoring.jpg" 
-                  alt="Communication Digitale"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-digita-dark/60 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-2xl font-bold text-white">Communication</h3>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-digita-gray-600 mb-4 leading-relaxed">
-                  Web marketing, production vidéo, conception graphique et community management pour votre marque.
-                </p>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center gap-2 text-sm text-digita-gray-600">
-                    <span className="w-1.5 h-1.5 bg-digita-green rounded-full"></span>
-                    Web Marketing
-                  </li>
-                  <li className="flex items-center gap-2 text-sm text-digita-gray-600">
-                    <span className="w-1.5 h-1.5 bg-digita-green rounded-full"></span>
-                    Production Vidéo
-                  </li>
-                  <li className="flex items-center gap-2 text-sm text-digita-gray-600">
-                    <span className="w-1.5 h-1.5 bg-digita-green rounded-full"></span>
-                    Community Management
-                  </li>
-                </ul>
-                <button className="text-digita-green hover:text-digita-green-700 font-medium text-sm flex items-center gap-2 group">
-                  En savoir plus
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Video Section - Infrastructure Showcase */}
-      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+        <motion.div 
+          className="absolute bottom-10 left-1/2 -translate-x-1/2"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
         >
-          <source src="/modern-website/assets/infrastructure-video.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-digita-dark/40"></div>
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl lg:text-6xl font-bold text-white mb-6">
-            Ensemble, Nous Construisons Le Futur
-          </h2>
-          <p className="text-xl text-white/90 mb-8">
-            Des infrastructures modernes pour une Afrique connectée et énergétiquement autonome
-          </p>
-        </div>
+          <div className="flex flex-col items-center gap-2 text-white/50">
+            <span className="text-xs font-medium tracking-wider">DÉFILER</span>
+            <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
+              <motion.div 
+                className="w-1.5 h-3 bg-energy-green rounded-full"
+                animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            </div>
+          </div>
+        </motion.div>
       </section>
+
+      {/* Statistics Bar */}
+      <StatsSection />
+
+      {/* About Section */}
+      <AboutSection />
+
+      {/* Services Section */}
+      <ServicesSection />
+
+      {/* Vision Section */}
+      <VisionSection />
 
       {/* Values Section */}
-      <section id="values" className="py-24 lg:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <div className="inline-block px-4 py-1.5 bg-digita-green/10 text-digita-green text-sm font-medium rounded-full mb-6">
-              Nos valeurs
-            </div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-digita-dark mb-4">
-              Ce qui nous guide
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-12">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-digita-green/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <svg className="w-8 h-8 text-digita-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-digita-dark mb-3">Diversité & Inclusion</h3>
-              <p className="text-digita-gray-600 leading-relaxed">
-                Nous croyons en l'égalité des chances pour tous, de partout dans le monde.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-digita-green/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <svg className="w-8 h-8 text-digita-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-digita-dark mb-3">Audace</h3>
-              <p className="text-digita-gray-600 leading-relaxed">
-                Nous ne craignons pas de miser sur des projets ambitieux pour changer l'Afrique.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-digita-green/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <svg className="w-8 h-8 text-digita-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-digita-dark mb-3">Excellence</h3>
-              <p className="text-digita-gray-600 leading-relaxed">
-                Nous challengeons sans cesse le statu quo pour l'excellence de nos solutions.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ValuesSection />
 
       {/* CTA Section */}
-      <section className="py-24 lg:py-32 bg-digita-green">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-            Prêt à transformer votre entreprise ?
-          </h2>
-          <p className="text-xl text-white/90 mb-10">
-            Contactez-nous pour discuter de vos projets énergétiques et numériques
-          </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <button className="bg-white hover:bg-digita-gray-100 text-digita-green px-10 py-4 rounded-md text-base font-medium transition-all duration-200">
-              Demander un devis
-            </button>
-            <button className="bg-digita-green-700 hover:bg-digita-green-800 text-white px-10 py-4 rounded-md text-base font-medium transition-all duration-200 border-2 border-white/20">
-              Prendre rendez-vous
-            </button>
-          </div>
-        </div>
-      </section>
+      <CTASection />
 
       {/* Footer */}
-      <footer className="bg-digita-dark py-16">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-12 mb-12">
-            <div>
-              <div className="text-xl font-semibold text-white mb-4">
-                DIGITA <span className="text-digita-green">ENERGY</span>
-              </div>
-              <p className="text-digita-gray-400 text-sm leading-relaxed">
-                Ensemble, Nous Construisons Le Futur!
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-white mb-4 text-sm">Services</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-digita-gray-400 hover:text-digita-green text-sm transition-colors">Énergie</a></li>
-                <li><a href="#" className="text-digita-gray-400 hover:text-digita-green text-sm transition-colors">Numérique</a></li>
-                <li><a href="#" className="text-digita-gray-400 hover:text-digita-green text-sm transition-colors">Communication</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-white mb-4 text-sm">Entreprise</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-digita-gray-400 hover:text-digita-green text-sm transition-colors">À propos</a></li>
-                <li><a href="#" className="text-digita-gray-400 hover:text-digita-green text-sm transition-colors">Nos valeurs</a></li>
-                <li><a href="#" className="text-digita-gray-400 hover:text-digita-green text-sm transition-colors">Carrières</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-white mb-4 text-sm">Contact</h4>
-              <ul className="space-y-2 text-sm">
-                <li className="text-digita-gray-400">contact@digita-energy.com</li>
-                <li className="text-digita-gray-400">+225 XX XX XX XX XX</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-digita-gray-600 pt-8">
-            <p className="text-center text-digita-gray-400 text-sm">
-              &copy; 2025 Digita Energy. Tous droits réservés.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
-  )
+  );
 }
 
-export default App
+// Statistics Section Component
+function StatsSection() {
+  const { ref, isVisible } = useScrollAnimation(0.1);
+  const [counts, setCounts] = useState({ power: 0, projects: 0, countries: 0, uptime: 0 });
+  const animationStarted = useRef(false);
+
+  useEffect(() => {
+    if (isVisible && !animationStarted.current) {
+      console.log('🎯 Starting count-up animation!');
+      animationStarted.current = true;
+      
+      const duration = 2000;
+      const steps = 60;
+      const stepDuration = duration / steps;
+
+      const targets = { power: 1.2, projects: 450, countries: 12, uptime: 99.8 };
+      let currentStep = 0;
+
+      const timer = setInterval(() => {
+        currentStep++;
+        const progress = currentStep / steps;
+        
+        setCounts({
+          power: Number((targets.power * progress).toFixed(1)),
+          projects: Math.floor(targets.projects * progress),
+          countries: Math.floor(targets.countries * progress),
+          uptime: Number((targets.uptime * progress).toFixed(1)),
+        });
+
+        console.log(`📊 Step ${currentStep}/${steps}`, { progress: (progress * 100).toFixed(0) + '%' });
+
+        if (currentStep >= steps) {
+          clearInterval(timer);
+          setCounts(targets);
+          console.log('✅ Count-up complete!', targets);
+        }
+      }, stepDuration);
+
+      return () => {
+        console.log('🧹 Cleaning up timer');
+        clearInterval(timer);
+      };
+    }
+  }, [isVisible]);
+
+  return (
+    <section ref={ref} className="relative py-20 border-y border-white/10">
+      <div className="absolute inset-0 bg-gradient-to-r from-energy-green/5 via-transparent to-cyber-blue/5" />
+      
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <StatCard 
+            value={`${counts.power}GW+`} 
+            label="Énergie Gérée" 
+            icon={<FaBolt />}
+            isVisible={isVisible}
+            delay={0}
+          />
+          <StatCard 
+            value={`${counts.projects}+`} 
+            label="Projets Livrés" 
+            icon={<FaNetworkWired />}
+            isVisible={isVisible}
+            delay={0.1}
+          />
+          <StatCard 
+            value={counts.countries} 
+            label="Pays" 
+            icon={<FaUsers />}
+            isVisible={isVisible}
+            delay={0.2}
+          />
+          <StatCard 
+            value={`${counts.uptime}%`} 
+            label="Disponibilité SLA" 
+            icon={<FaShieldAlt />}
+            isVisible={isVisible}
+            delay={0.3}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function StatCard({ value, label, icon, isVisible, delay }: any) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay }}
+      className="text-center"
+    >
+      <div className="text-energy-green text-3xl mb-3 flex justify-center">
+        {icon}
+      </div>
+      <div className="text-4xl lg:text-5xl font-display font-bold mb-2">
+        <GradientText>{value}</GradientText>
+      </div>
+      <div className="text-white/60 text-sm font-medium tracking-wide uppercase">
+        {label}
+      </div>
+    </motion.div>
+  );
+}
+
+// About Section
+function AboutSection() {
+  const { ref, isVisible } = useScrollAnimation(0.2);
+
+  return (
+    <section ref={ref} id="about" className="relative py-24 lg:py-32 bg-graphite/30 overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-20 right-10 w-64 h-64 bg-energy-green/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 left-10 w-64 h-64 bg-cyber-blue/10 rounded-full blur-3xl" />
+      
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left: Visual */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
+            <GlassCard className="p-8" hover>
+              <div className="aspect-[4/3] bg-gradient-to-br from-energy-green/20 to-cyber-blue/20 rounded-xl flex items-center justify-center relative overflow-hidden">
+                {/* Placeholder for image */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-6xl text-energy-green/30">
+                    <FaNetworkWired />
+                  </div>
+                </div>
+                
+                {/* Animated Grid Overlay */}
+                <div className="absolute inset-0 opacity-20">
+                  <div className="w-full h-full" 
+                    style={{
+                      backgroundImage: 'linear-gradient(#00FF87 1px, transparent 1px), linear-gradient(90deg, #00FF87 1px, transparent 1px)',
+                      backgroundSize: '50px 50px'
+                    }}
+                  />
+                </div>
+
+                {/* Corner Brackets */}
+                <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-energy-green" />
+                <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-energy-green" />
+                <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-energy-green" />
+                <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-energy-green" />
+              </div>
+            </GlassCard>
+          </motion.div>
+
+          {/* Right: Content */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <div className="inline-block px-4 py-2 mb-6 backdrop-blur-sm bg-energy-green/10 border border-energy-green/30 rounded-full">
+              <span className="text-energy-green text-sm font-bold tracking-wider uppercase">
+                Qui Sommes-Nous
+              </span>
+            </div>
+
+            <h2 className="font-display text-display font-bold mb-6 leading-tight">
+              Construire les
+              <GradientText className="block">
+                Infrastructures de Demain
+              </GradientText>
+            </h2>
+
+            <p className="text-lg text-white/70 mb-4 leading-relaxed">
+              Nous ne nous contentons pas d'installer des systèmes électriques. Nous <span className="text-energy-green font-semibold">concevons l'écosystème énergétique intelligent</span> qui alimentera la révolution numérique de l'Afrique.
+            </p>
+
+            <p className="text-lg text-white/70 mb-8 leading-relaxed">
+              Des réseaux intelligents aux solutions durables, des centres de données aux réseaux de distribution — nous façonnons l'épine dorsale du progrès.
+            </p>
+
+            {/* Features */}
+            <div className="space-y-4">
+              {[
+                'Solutions Énergétiques Axées sur la Technologie',
+                'Infrastructure Durable et Évolutive',
+                'Intégration Numérique à Tous les Niveaux',
+                'Innovation Africaine pour Défis Africains'
+              ].map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isVisible ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                  className="flex items-center gap-3 group"
+                >
+                  <div className="w-6 h-6 rounded-full bg-energy-green/20 flex items-center justify-center group-hover:bg-energy-green/30 transition-colors">
+                    <div className="w-2 h-2 rounded-full bg-energy-green" />
+                  </div>
+                  <span className="text-white/80 group-hover:text-white transition-colors">
+                    {feature}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Services Section
+function ServicesSection() {
+  const { ref, isVisible } = useScrollAnimation(0.2);
+
+  const services = [
+    {
+      title: 'Solutions Réseau Intelligent',
+      subtitle: 'Distribution Électrique Intelligente',
+      description: 'Nous concevons, construisons et optimisons des réseaux électriques intelligents combinant infrastructure traditionnelle et IoT de pointe, surveillance IA et maintenance prédictive.',
+      features: [
+        'Systèmes SCADA & Téléconduite',
+        'Intégration Réseau HT/MT/BT',
+        'Analytique Réseau en Temps Réel',
+        'Infrastructure de Cybersécurité'
+      ],
+      icon: <FaBolt />,
+      gradient: 'from-energy-green to-emerald-400'
+    },
+    {
+      title: 'Infrastructure Numérique',
+      subtitle: 'Technologie Qui Alimente le Progrès',
+      description: 'De l\'architecture cloud aux logiciels personnalisés, nous construisons l\'épine dorsale numérique dont les systèmes énergétiques modernes ont besoin.',
+      features: [
+        'Développement Plateforme IoT',
+        'Systèmes de Gestion Énergétique',
+        'Analytique de Données & BI',
+        'Cloud & Edge Computing'
+      ],
+      icon: <FaNetworkWired />,
+      gradient: 'from-cyber-blue to-blue-400'
+    },
+    {
+      title: 'Intégration Durable',
+      subtitle: 'Énergie Propre, Mise en Œuvre Intelligente',
+      description: 'Systèmes solaires, éoliens, hybrides — intégrés de manière transparente dans l\'infrastructure existante avec commutation intelligente et optimisation du stockage.',
+      features: [
+        'Intégration des Énergies Renouvelables',
+        'Systèmes de Stockage d\'Énergie',
+        'Solutions de Micro-réseaux',
+        'Suivi Carbone'
+      ],
+      icon: <FaSolarPanel />,
+      gradient: 'from-solar-orange to-yellow-400'
+    }
+  ];
+
+  return (
+    <section ref={ref} id="services" className="relative py-24 lg:py-32 overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-deep-black via-graphite/50 to-deep-black" />
+      
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-20"
+        >
+          <div className="inline-block px-4 py-2 mb-6 backdrop-blur-sm bg-cyber-blue/10 border border-cyber-blue/30 rounded-full">
+            <span className="text-cyber-blue text-sm font-bold tracking-wider uppercase">
+              Ce Que Nous Faisons
+            </span>
+          </div>
+          
+          <h2 className="font-display text-display font-bold mb-4">
+            Solutions Complètes <GradientText>Énergie & Numérique</GradientText>
+          </h2>
+          
+          <p className="text-xl text-white/60 max-w-3xl mx-auto">
+            Des solutions complètes qui font le pont entre l'énergie traditionnelle et l'avenir numérique
+          </p>
+        </motion.div>
+
+        {/* Service Cards */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+            >
+              <GlassCard className="h-full p-8 group cursor-pointer" hover>
+                {/* Icon */}
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} bg-opacity-20 flex items-center justify-center mb-6 text-3xl text-white group-hover:scale-110 transition-transform duration-300`}>
+                  {service.icon}
+                </div>
+
+                {/* Title */}
+                <h3 className="font-display text-2xl font-bold mb-2">
+                  {service.title}
+                </h3>
+                <p className="text-sm text-energy-green mb-4 font-semibold">
+                  {service.subtitle}
+                </p>
+
+                {/* Description */}
+                <p className="text-white/70 mb-6 leading-relaxed">
+                  {service.description}
+                </p>
+
+                {/* Features */}
+                <ul className="space-y-3 mb-6">
+                  {service.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm text-white/60">
+                      <span className="text-energy-green mt-1">→</span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA */}
+                <motion.div
+                  whileHover={{ x: 5 }}
+                  className="text-energy-green font-semibold text-sm flex items-center gap-2"
+                >
+                  En Savoir Plus 
+                  <span className="text-lg">→</span>
+                </motion.div>
+              </GlassCard>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Vision Section
+function VisionSection() {
+  const { ref, isVisible } = useScrollAnimation(0.2);
+
+  return (
+    <section ref={ref} id="vision" className="relative py-24 lg:py-32 bg-graphite/30">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="font-display text-display font-bold mb-8">
+            Notre <GradientText>Vision pour 2030</GradientText>
+          </h2>
+          
+          <blockquote className="text-3xl lg:text-4xl font-display font-medium text-white/90 max-w-4xl mx-auto leading-relaxed">
+            "Un réseau énergétique durable et entièrement connecté à travers l'Afrique — 
+            où l'énergie est <GradientText>propre, fiable et intelligemment distribuée.</GradientText>"
+          </blockquote>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// Values Section
+function ValuesSection() {
+  const { ref, isVisible } = useScrollAnimation(0.2);
+
+  const values = [
+    {
+      icon: <FaBolt />,
+      title: 'Innovation',
+      description: "Nous ne suivons pas les tendances — nous les créons."
+    },
+    {
+      icon: <FaShieldAlt />,
+      title: 'Fiabilité',
+      description: "99,8% de disponibilité n'est pas un objectif. C'est notre standard."
+    },
+    {
+      icon: <FaLeaf />,
+      title: 'Durabilité',
+      description: "L'énergie propre n'est pas optionnelle. Elle est essentielle."
+    },
+    {
+      icon: <FaNetworkWired />,
+      title: 'Partenariat',
+      description: "Votre succès est notre mission."
+    }
+  ];
+
+  return (
+    <section ref={ref} className="py-24 lg:py-32">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          className="text-center mb-20"
+        >
+          <h2 className="font-display text-display font-bold mb-4">
+            Ce Qui <GradientText>Nous Anime</GradientText>
+          </h2>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {values.map((value, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+            >
+              <GlassCard className="p-8 text-center h-full" hover>
+                <div className="text-5xl text-energy-green mb-4 flex justify-center">
+                  {value.icon}
+                </div>
+                <h3 className="font-display text-xl font-bold mb-3">
+                  {value.title}
+                </h3>
+                <p className="text-white/70 text-sm leading-relaxed">
+                  {value.description}
+                </p>
+              </GlassCard>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// CTA Section
+function CTASection() {
+  return (
+    <section className="relative py-24 lg:py-32 overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 180, 360],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute inset-0 bg-gradient-to-r from-energy-green/20 via-cyber-blue/20 to-plasma-purple/20 blur-3xl"
+        />
+      </div>
+
+      <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
+        <h2 className="font-display text-display font-bold mb-6">
+          Prêt à Alimenter <GradientText>Votre Avenir ?</GradientText>
+        </h2>
+        
+        <p className="text-xl text-white/70 mb-10">
+          Discutons de la façon dont nos solutions peuvent transformer votre infrastructure énergétique.
+        </p>
+
+        <div className="flex gap-4 justify-center flex-wrap">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-10 py-4 bg-energy-gradient rounded-lg font-bold text-deep-black text-lg"
+          >
+            Planifier une Consultation
+          </motion.button>
+          
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-10 py-4 backdrop-blur-sm bg-white/5 border-2 border-white/20 rounded-lg font-bold text-lg hover:bg-white/10 transition-all"
+          >
+            Télécharger les Études de Cas
+          </motion.button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Footer
+function Footer() {
+  return (
+    <footer className="relative bg-deep-black border-t border-white/10 py-16">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid md:grid-cols-4 gap-12 mb-12">
+          <div>
+            <div className="text-2xl font-display font-bold mb-4">
+              DIGITA <GradientText>ENERGY</GradientText>
+            </div>
+            <p className="text-white/60 text-sm leading-relaxed">
+              Énergiser l'Avenir de l'Afrique par l'Innovation et la Technologie
+            </p>
+          </div>
+
+          <div>
+            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider">Solutions</h4>
+            <ul className="space-y-2">
+              <li><a href="#" className="text-white/60 hover:text-energy-green text-sm transition-colors">Réseau Intelligent</a></li>
+              <li><a href="#" className="text-white/60 hover:text-energy-green text-sm transition-colors">Infrastructure Numérique</a></li>
+              <li><a href="#" className="text-white/60 hover:text-energy-green text-sm transition-colors">Énergie Durable</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider">Entreprise</h4>
+            <ul className="space-y-2">
+              <li><a href="#" className="text-white/60 hover:text-energy-green text-sm transition-colors">À Propos</a></li>
+              <li><a href="#" className="text-white/60 hover:text-energy-green text-sm transition-colors">Vision</a></li>
+              <li><a href="#" className="text-white/60 hover:text-energy-green text-sm transition-colors">Carrières</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider">Contact</h4>
+            <ul className="space-y-2 text-sm text-white/60">
+              <li>contact@digita-energy.com</li>
+              <li>+225 XX XX XX XX XX</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="border-t border-white/10 pt-8 text-center">
+          <p className="text-white/40 text-sm">
+            &copy; 2025 Digita Energy. Tous droits réservés.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+export default App;
