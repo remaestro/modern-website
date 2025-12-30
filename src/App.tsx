@@ -13,6 +13,33 @@ import {
 } from 'react-icons/fa';
 import { useEffect, useState, useRef } from 'react';
 
+// Counter component with animation
+function Counter({ target, suffix = '', decimals = 0 }: { target: number; suffix?: string; decimals?: number }) {
+  const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  useEffect(() => {
+    if (!hasStarted) {
+      const timer = setTimeout(() => setHasStarted(true), 1000);
+      return () => clearTimeout(timer);
+    }
+
+    if (hasStarted && count < target) {
+      const increment = target / 50;
+      const timer = setTimeout(() => {
+        setCount(prev => {
+          const next = prev + increment;
+          return next > target ? target : next;
+        });
+      }, 30);
+      return () => clearTimeout(timer);
+    }
+  }, [count, target, hasStarted]);
+
+  const displayValue = decimals > 0 ? count.toFixed(decimals) : Math.floor(count);
+  return <>{displayValue}{suffix}</>;
+}
+
 // Animated rotating words component with color transition
 function AnimatedWord() {
   const words = [
@@ -119,9 +146,19 @@ function App() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Gradient Mesh Background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-deep-black via-graphite to-deep-black" />
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video 
+            autoPlay={true}
+            loop={true}
+            muted={true}
+            playsInline={true}
+            className="w-full h-full object-cover opacity-70"
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+          >
+            <source src="/modern-website/hero-video.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-deep-black/30 via-deep-black/20 to-deep-black/50 z-10" />
           
           <motion.div 
             animate={{
@@ -205,6 +242,54 @@ function App() {
               Démarrer votre projet →
             </motion.button>
           </motion.div>
+
+          {/* Stats Grid */}
+          <motion.div 
+            className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1 }}
+          >
+            <div className="text-center">
+              <div className="text-energy-green text-3xl mb-3 flex justify-center">
+                <FaBolt />
+              </div>
+              <div className="text-4xl lg:text-5xl font-display font-bold mb-2">
+                <GradientText><Counter target={1.2} suffix="GW+" decimals={1} /></GradientText>
+              </div>
+              <div className="text-white/60 text-sm font-medium tracking-wide uppercase">Énergie Gérée</div>
+            </div>
+            
+            <div className="text-center">
+              <div className="text-energy-green text-3xl mb-3 flex justify-center">
+                <FaNetworkWired />
+              </div>
+              <div className="text-4xl lg:text-5xl font-display font-bold mb-2">
+                <GradientText><Counter target={450} suffix="+" /></GradientText>
+              </div>
+              <div className="text-white/60 text-sm font-medium tracking-wide uppercase">Projets Livrés</div>
+            </div>
+            
+            <div className="text-center">
+              <div className="text-energy-green text-3xl mb-3 flex justify-center">
+                <FaUsers />
+              </div>
+              <div className="text-4xl lg:text-5xl font-display font-bold mb-2">
+                <GradientText><Counter target={12} /></GradientText>
+              </div>
+              <div className="text-white/60 text-sm font-medium tracking-wide uppercase">Pays</div>
+            </div>
+            
+            <div className="text-center">
+              <div className="text-energy-green text-3xl mb-3 flex justify-center">
+                <FaShieldAlt />
+              </div>
+              <div className="text-4xl lg:text-5xl font-display font-bold mb-2">
+                <GradientText><Counter target={99.8} suffix="%" decimals={1} /></GradientText>
+              </div>
+              <div className="text-white/60 text-sm font-medium tracking-wide uppercase">Disponibilité SLA</div>
+            </div>
+          </motion.div>
         </div>
 
         {/* Scroll Indicator */}
@@ -225,9 +310,6 @@ function App() {
           </div>
         </motion.div>
       </section>
-
-      {/* Statistics Bar */}
-      <StatsSection />
 
       {/* About Section */}
       <AboutSection />
