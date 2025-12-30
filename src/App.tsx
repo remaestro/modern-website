@@ -13,15 +13,19 @@ import {
 } from 'react-icons/fa';
 import { useEffect, useState, useRef } from 'react';
 
-// Animated rotating words component
+// Animated rotating words component with color transition
 function AnimatedWord() {
-  const words = ['ÉNERGISER', 'ÉLECTRIFIER', 'DÉVELOPPER', 'FAIRE BOUGER LES CHOSES'];
+  const words = [
+    { text: 'ÉNERGISER', color: 'from-orange-500 to-orange-400' },
+    { text: 'DÉVELOPPER', color: 'from-blue-500 to-blue-400' },
+    { text: 'CHANGER', color: 'from-energy-green to-emerald-400' }
+  ];
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % words.length);
-    }, 1500); // Change tous les 1.5 secondes (plus rapide)
+    }, 1500);
 
     return () => clearInterval(interval);
   }, [words.length]);
@@ -38,9 +42,9 @@ function AnimatedWord() {
             duration: 0.25,
             ease: [0.4, 0, 0.2, 1]
           }}
-          className="absolute inset-0 flex items-center justify-center"
+          className={`absolute inset-0 flex items-center justify-center bg-gradient-to-r ${words[currentIndex].color} bg-clip-text text-transparent`}
         >
-          {words[currentIndex]}
+          {words[currentIndex].text}
         </motion.span>
       </AnimatePresence>
     </div>
@@ -163,21 +167,6 @@ function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <motion.div 
-              className="inline-block px-4 py-2 mb-8 backdrop-blur-sm bg-white/5 border border-energy-green/30 rounded-full"
-              animate={{ 
-                boxShadow: [
-                  '0 0 20px rgba(0, 255, 135, 0.3)',
-                  '0 0 40px rgba(0, 255, 135, 0.5)',
-                  '0 0 20px rgba(0, 255, 135, 0.3)',
-                ]
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <span className="text-energy-green text-sm font-bold tracking-wider">
-                ⚡ ALIMENTER L'AVENIR NUMÉRIQUE DE L'AFRIQUE
-              </span>
-            </motion.div>
           </motion.div>
 
           <motion.h1 
@@ -187,11 +176,9 @@ function App() {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <AnimatedWord />
-            <GradientText>
-              <span className="block text-4xl md:text-5xl lg:text-6xl font-bold leading-none mt-2 text-center">
-                L'AVENIR DE L'AFRIQUE
-              </span>
-            </GradientText>
+            <span className="block text-4xl md:text-5xl lg:text-6xl font-bold leading-none mt-2 text-center text-white">
+              L'AFRIQUE
+            </span>
           </motion.h1>
 
 
