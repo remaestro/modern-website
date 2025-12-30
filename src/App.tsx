@@ -35,7 +35,7 @@ function App() {
             playsInline
             className="w-full h-full object-cover"
           >
-            <source src="/assets/hero-video-2.mp4" type="video/mp4" />
+            <source src="/modern-website/assets/hero-video-2.mp4" type="video/mp4" />
           </video>
           {/* Gradient Overlay for readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-digita-dark/80 via-digita-dark/50 to-transparent"></div>
@@ -81,7 +81,7 @@ function App() {
             <div className="relative">
               <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
                 <img 
-                  src="/assets/team-collaboration.jpg" 
+                  src="/modern-website/assets/team-collaboration.jpg" 
                   alt="Équipe Digita Energy"
                   className="w-full h-full object-cover"
                 />
@@ -151,7 +151,7 @@ function App() {
             <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
               <div className="aspect-[4/3] overflow-hidden relative">
                 <img 
-                  src="/assets/hero-energy-infrastructure.jpg" 
+                  src="/modern-website/assets/hero-energy-infrastructure.jpg" 
                   alt="Infrastructure Énergétique"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -191,7 +191,7 @@ function App() {
             <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
               <div className="aspect-[4/3] overflow-hidden relative">
                 <img 
-                  src="/assets/data-center-servers.jpg" 
+                  src="/modern-website/assets/data-center-servers.jpg" 
                   alt="Infrastructure Numérique"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -231,7 +231,7 @@ function App() {
             <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
               <div className="aspect-[4/3] overflow-hidden relative">
                 <img 
-                  src="/assets/control-room-monitoring.jpg" 
+                  src="/modern-website/assets/control-room-monitoring.jpg" 
                   alt="Communication Digitale"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -279,7 +279,7 @@ function App() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/assets/infrastructure-video.mp4" type="video/mp4" />
+          <source src="/modern-website/assets/infrastructure-video.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-digita-dark/40"></div>
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
