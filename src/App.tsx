@@ -339,7 +339,34 @@ function AboutSection() {
   const { ref, isVisible } = useScrollAnimation(0.2);
 
   return (
-    <section ref={ref} id="about" className="relative py-24 lg:py-32 bg-graphite/30 overflow-hidden">
+    <section ref={ref} id="about" className="relative py-24 lg:py-32 overflow-hidden">
+      {/* Scrolling Background Images */}
+      <div className="absolute inset-0 opacity-10">
+        <motion.div
+          className="absolute inset-0 flex"
+          animate={{ x: ['-50%', '0%'] }}
+          transition={{ 
+            duration: 60,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        >
+          <div className="flex-shrink-0 w-full h-full bg-repeat-x" style={{ 
+            backgroundImage: `url(/modern-website/assets/bg-solar.png), url(/modern-website/assets/bg-payment.webp)`,
+            backgroundSize: '800px auto, 800px auto',
+            backgroundPosition: '0 center, 800px center',
+          }} />
+          <div className="flex-shrink-0 w-full h-full bg-repeat-x" style={{ 
+            backgroundImage: `url(/modern-website/assets/bg-solar.png), url(/modern-website/assets/bg-payment.webp)`,
+            backgroundSize: '800px auto, 800px auto',
+            backgroundPosition: '0 center, 800px center',
+          }} />
+        </motion.div>
+      </div>
+
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-deep-black/95 via-deep-black/90 to-deep-black/95" />
+      
       {/* Background Elements */}
       <div className="absolute top-20 right-10 w-64 h-64 bg-energy-green/10 rounded-full blur-3xl" />
       <div className="absolute bottom-20 left-10 w-64 h-64 bg-cyber-blue/10 rounded-full blur-3xl" />
