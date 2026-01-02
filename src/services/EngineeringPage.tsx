@@ -63,13 +63,13 @@ function EngineeringPage() {
             transition={{ duration: 0.8 }}
           >
             <div className="flex items-center gap-3 mb-6">
-              <FaBolt className="text-4xl text-energy-green" />
+              <FaBolt className="text-4xl text-cyber-blue" />
               <h1 className="font-display text-5xl lg:text-6xl font-bold">
-                Transformateurs <GradientText>HT/MT/BT</GradientText>
+                Ingénierie & <GradientText>Conception</GradientText>
               </h1>
             </div>
             <p className="text-xl text-white/70 max-w-3xl">
-              Solutions de transformation électrique haute performance pour vos infrastructures énergétiques
+              Études techniques et conception de réseaux électriques par nos ingénieurs experts
             </p>
           </motion.div>
         </div>
@@ -77,46 +77,46 @@ function EngineeringPage() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
         <div className="grid lg:grid-cols-3 gap-12">
-          {/* Left: Product Info */}
+          {/* Left: Service Info */}
           <div className="lg:col-span-1 space-y-6">
             <GlassCard className="p-6">
-              <h3 className="font-display text-xl font-bold mb-4">Caractéristiques</h3>
+              <h3 className="font-display text-xl font-bold mb-4">Nos Expertises</h3>
               <ul className="space-y-3 text-sm">
                 <li className="flex items-start gap-2">
-                  <FaCheckCircle className="text-energy-green mt-1 flex-shrink-0" />
-                  <span>Puissance de 50 kVA à 5000 kVA</span>
+                  <FaCheckCircle className="text-cyber-blue mt-1 flex-shrink-0" />
+                  <span>Études de faisabilité technique</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <FaCheckCircle className="text-energy-green mt-1 flex-shrink-0" />
-                  <span>Tensions HT/MT/BT personnalisables</span>
+                  <FaCheckCircle className="text-cyber-blue mt-1 flex-shrink-0" />
+                  <span>Conception de réseaux HT/MT/BT</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <FaCheckCircle className="text-energy-green mt-1 flex-shrink-0" />
-                  <span>Rendement optimisé ≥ 98%</span>
+                  <FaCheckCircle className="text-cyber-blue mt-1 flex-shrink-0" />
+                  <span>Calculs de courts-circuits</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <FaCheckCircle className="text-energy-green mt-1 flex-shrink-0" />
-                  <span>Protection intégrée et monitoring</span>
+                  <FaCheckCircle className="text-cyber-blue mt-1 flex-shrink-0" />
+                  <span>Plans d'exécution AutoCAD</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <FaCheckCircle className="text-energy-green mt-1 flex-shrink-0" />
-                  <span>Conformité normes internationales</span>
+                  <FaCheckCircle className="text-cyber-blue mt-1 flex-shrink-0" />
+                  <span>Dimensionnement d'équipements</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <FaCheckCircle className="text-energy-green mt-1 flex-shrink-0" />
-                  <span>Garantie constructeur 5 ans</span>
+                  <FaCheckCircle className="text-cyber-blue mt-1 flex-shrink-0" />
+                  <span>Étude d'impact environnemental</span>
                 </li>
               </ul>
             </GlassCard>
 
             <GlassCard className="p-6">
-              <h3 className="font-display text-xl font-bold mb-4">Applications</h3>
+              <h3 className="font-display text-xl font-bold mb-4">Livrables</h3>
               <ul className="space-y-2 text-sm text-white/70">
-                <li>• Réseaux de distribution électrique</li>
-                <li>• Installations industrielles</li>
-                <li>• Centres commerciaux</li>
-                <li>• Infrastructures publiques</li>
-                <li>• Sites miniers et pétroliers</li>
+                <li>• Notes de calculs détaillées</li>
+                <li>• Plans AutoCAD/MicroStation</li>
+                <li>• Schémas électriques</li>
+                <li>• Cahiers des charges</li>
+                <li>• Devis quantitatifs estimatifs</li>
               </ul>
             </GlassCard>
           </div>
