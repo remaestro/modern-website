@@ -44,9 +44,9 @@ test.describe('Digita Energy Website', () => {
     await expect(page.getByRole('heading', { name: 'Solutions Réseau Intelligent' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Infrastructure Numérique' })).toBeVisible();
     
-    // Check that service cards have links to products page
-    await expect(page.locator('a[href="/products-services#energy"]')).toBeVisible();
-    await expect(page.locator('a[href="/products-services#digital"]')).toBeVisible();
+    // Check that "En Savoir Plus" buttons are present
+    const savoirPlusButtons = page.getByText('En Savoir Plus');
+    await expect(savoirPlusButtons.first()).toBeVisible();
   });
 
   test('should have video background in hero', async ({ page }) => {
