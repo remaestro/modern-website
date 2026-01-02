@@ -381,28 +381,30 @@ function AboutSection() {
           >
             <GlassCard className="p-8" hover>
               <div className="aspect-[4/3] bg-gradient-to-br from-energy-green/20 to-cyber-blue/20 rounded-xl flex items-center justify-center relative overflow-hidden">
-                {/* Placeholder for image */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-6xl text-energy-green/30">
-                    <FaNetworkWired />
-                  </div>
-                </div>
-                
-                {/* Animated Grid Overlay */}
-                <div className="absolute inset-0 opacity-20">
-                  <div className="w-full h-full" 
-                    style={{
-                      backgroundImage: 'linear-gradient(#00FF87 1px, transparent 1px), linear-gradient(90deg, #00FF87 1px, transparent 1px)',
-                      backgroundSize: '50px 50px'
-                    }}
-                  />
-                </div>
+                {/* Video Background */}
+                <video 
+                  autoPlay={true}
+                  loop={true}
+                  muted={true}
+                  playsInline={true}
+                  className="absolute inset-0 w-full h-full object-cover rounded-xl"
+                  onLoadedMetadata={(e) => {
+                    const video = e.currentTarget;
+                    video.addEventListener('timeupdate', () => {
+                      if (video.currentTime >= 4) {
+                        video.currentTime = 0;
+                      }
+                    });
+                  }}
+                >
+                  <source src="/modern-website/assets/about-video-full.mp4" type="video/mp4" />
+                </video>
 
                 {/* Corner Brackets */}
-                <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-energy-green" />
-                <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-energy-green" />
-                <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-energy-green" />
-                <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-energy-green" />
+                <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-energy-green z-10" />
+                <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-energy-green z-10" />
+                <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-energy-green z-10" />
+                <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-energy-green z-10" />
               </div>
             </GlassCard>
           </motion.div>
