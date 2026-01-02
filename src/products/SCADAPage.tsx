@@ -260,6 +260,9 @@ function SCADAPage() {
                     <div className="grid md:grid-cols-2 gap-3">
                       {[
                         'Téléconduite',
+                        'CCN (Contrôle Commande Numérique)',
+                        'CRF (Coffret Regroupement Filerie)',
+                        'Calculateur',
                         'Gestion des alarmes',
                         'Rapports automatiques',
                         'Analyses prédictives',
