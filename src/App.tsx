@@ -420,26 +420,30 @@ function AboutSection() {
             </div>
 
             <h2 className="font-display text-display font-bold mb-6 leading-tight">
-              Construire les
+              La Double Force de
               <GradientText className="block">
-                Infrastructures de Demain
+                l'Énergie & du Digital
               </GradientText>
             </h2>
 
             <p className="text-lg text-white/70 mb-4 leading-relaxed">
-              Nous ne nous contentons pas d'installer des systèmes électriques. Nous <span className="text-energy-green font-semibold">concevons l'écosystème énergétique intelligent</span> qui alimentera la révolution numérique de l'Afrique.
+              Nous incarnons <span className="text-energy-green font-semibold">une dualité puissante</span> : moderniser le réseau électrique africain tout en accélérant sa transformation digitale.
+            </p>
+
+            <p className="text-lg text-white/70 mb-4 leading-relaxed">
+              D'un côté, nous <span className="text-cyber-blue font-semibold">déployons des infrastructures énergétiques intelligentes</span> — réseaux HT/MT/BT, systèmes SCADA, intégration d'énergies renouvelables. De l'autre, nous <span className="text-cyber-blue font-semibold">bâtissons l'épine dorsale numérique</span> de l'Afrique : plateformes IoT, solutions cloud, analytics en temps réel.
             </p>
 
             <p className="text-lg text-white/70 mb-8 leading-relaxed">
-              Des réseaux intelligents aux solutions durables, des centres de données aux réseaux de distribution — nous façonnons l'épine dorsale du progrès.
+              Cette double expertise fait de nous plus qu'un simple opérateur — nous sommes les <GradientText>architectes de l'Afrique connectée et énergisée</GradientText>.
             </p>
 
             {/* Features */}
             <div className="space-y-4">
               {[
-                'Solutions Énergétiques Axées sur la Technologie',
+                'Modernisation des Réseaux Électriques Intelligents',
+                'Digitalisation & Transformation Numérique',
                 'Infrastructure Durable et Évolutive',
-                'Intégration Numérique à Tous les Niveaux',
                 'Innovation Africaine pour Défis Africains'
               ].map((feature, index) => (
                 <motion.div
