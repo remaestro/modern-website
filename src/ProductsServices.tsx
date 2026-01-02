@@ -123,33 +123,33 @@ function ProductsServices() {
                 <h3 className="font-display text-2xl font-bold">Services</h3>
               </div>
               <ul className="space-y-4">
-                <li className="flex items-start gap-3">
+                <li className="flex items-start gap-3 group cursor-pointer hover:translate-x-2 transition-transform">
                   <span className="text-cyber-blue mt-1">→</span>
-                  <div>
-                    <h4 className="font-bold mb-1">Ingénierie & Conception</h4>
+                  <Link to="/services/engineering" className="flex-1">
+                    <h4 className="font-bold mb-1 group-hover:text-cyber-blue transition-colors">Ingénierie & Conception</h4>
                     <p className="text-sm text-white/60">Études techniques et conception de réseaux électriques</p>
-                  </div>
+                  </Link>
                 </li>
-                <li className="flex items-start gap-3">
+                <li className="flex items-start gap-3 group cursor-pointer hover:translate-x-2 transition-transform">
                   <span className="text-cyber-blue mt-1">→</span>
-                  <div>
-                    <h4 className="font-bold mb-1">Installation & Commissioning</h4>
+                  <Link to="/services/installation" className="flex-1">
+                    <h4 className="font-bold mb-1 group-hover:text-cyber-blue transition-colors">Installation & Commissioning</h4>
                     <p className="text-sm text-white/60">Mise en œuvre clé en main de vos infrastructures</p>
-                  </div>
+                  </Link>
                 </li>
-                <li className="flex items-start gap-3">
+                <li className="flex items-start gap-3 group cursor-pointer hover:translate-x-2 transition-transform">
                   <span className="text-cyber-blue mt-1">→</span>
-                  <div>
-                    <h4 className="font-bold mb-1">Maintenance Préventive</h4>
+                  <Link to="/services/maintenance" className="flex-1">
+                    <h4 className="font-bold mb-1 group-hover:text-cyber-blue transition-colors">Maintenance Préventive</h4>
                     <p className="text-sm text-white/60">Programmes de maintenance avec IA prédictive</p>
-                  </div>
+                  </Link>
                 </li>
-                <li className="flex items-start gap-3">
+                <li className="flex items-start gap-3 group cursor-pointer hover:translate-x-2 transition-transform">
                   <span className="text-cyber-blue mt-1">→</span>
-                  <div>
-                    <h4 className="font-bold mb-1">Audit & Optimisation</h4>
+                  <Link to="/services/audit" className="flex-1">
+                    <h4 className="font-bold mb-1 group-hover:text-cyber-blue transition-colors">Audit & Optimisation</h4>
                     <p className="text-sm text-white/60">Analyse et amélioration de performance réseau</p>
-                  </div>
+                  </Link>
                 </li>
               </ul>
             </GlassCard>
