@@ -66,7 +66,7 @@ function ProductsServices() {
               </span>
             </div>
             <h2 className="font-display text-4xl lg:text-5xl font-bold mb-4">
-              Produits & Services <GradientText>Énergétiques</GradientText>
+              Produits & Services <GradientText>Énergie</GradientText>
             </h2>
           </motion.div>
 
