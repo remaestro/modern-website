@@ -85,26 +85,26 @@ function ProductsServices() {
                     <p className="text-sm text-white/60">Solutions de transformation électrique haute performance</p>
                   </Link>
                 </li>
-                <li className="flex items-start gap-3">
+                <li className="flex items-start gap-3 group cursor-pointer hover:translate-x-2 transition-transform">
                   <span className="text-energy-green mt-1">→</span>
-                  <div>
-                    <h4 className="font-bold mb-1">Postes de Distribution</h4>
+                  <Link to="/products/distribution-posts" className="flex-1">
+                    <h4 className="font-bold mb-1 group-hover:text-energy-green transition-colors">Postes de Distribution</h4>
                     <p className="text-sm text-white/60">Infrastructure de distribution intelligente et sécurisée</p>
-                  </div>
+                  </Link>
                 </li>
-                <li className="flex items-start gap-3">
+                <li className="flex items-start gap-3 group cursor-pointer hover:translate-x-2 transition-transform">
                   <span className="text-energy-green mt-1">→</span>
-                  <div>
-                    <h4 className="font-bold mb-1">Systèmes SCADA</h4>
+                  <Link to="/products/scada" className="flex-1">
+                    <h4 className="font-bold mb-1 group-hover:text-energy-green transition-colors">Systèmes SCADA</h4>
                     <p className="text-sm text-white/60">Supervision et contrôle en temps réel</p>
-                  </div>
+                  </Link>
                 </li>
-                <li className="flex items-start gap-3">
+                <li className="flex items-start gap-3 group cursor-pointer hover:translate-x-2 transition-transform">
                   <span className="text-energy-green mt-1">→</span>
-                  <div>
-                    <h4 className="font-bold mb-1">Protection & Automatisation</h4>
+                  <Link to="/products/protection" className="flex-1">
+                    <h4 className="font-bold mb-1 group-hover:text-energy-green transition-colors">Protection & Automatisation</h4>
                     <p className="text-sm text-white/60">Dispositifs de protection et systèmes automatisés</p>
-                  </div>
+                  </Link>
                 </li>
               </ul>
             </GlassCard>
