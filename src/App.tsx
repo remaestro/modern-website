@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useScrollAnimation } from './hooks/useScrollAnimation';
 import GlassCard from './components/ui/GlassCard';
 import GradientText from './components/ui/GradientText';
@@ -126,6 +127,12 @@ function App() {
               >
                 Solutions
               </a>
+              <Link 
+                to="/products-services" 
+                className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200"
+              >
+                Produits & Services
+              </Link>
               <a 
                 href="#vision" 
                 className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200"
@@ -572,7 +579,7 @@ function ServicesSection() {
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >
-              <a href={service.link}>
+              <Link to={service.link}>
                 <GlassCard className="h-full p-8 group cursor-pointer" hover>
                   {/* Icon */}
                   <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} bg-opacity-20 flex items-center justify-center mb-6 text-3xl text-white group-hover:scale-110 transition-transform duration-300`}>
@@ -611,7 +618,7 @@ function ServicesSection() {
                     <span className="text-lg">→</span>
                   </motion.div>
                 </GlassCard>
-              </a>
+              </Link>
             </motion.div>
           ))}
         </div>

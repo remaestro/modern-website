@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { FaBolt, FaNetworkWired, FaServer, FaChartLine, FaCloud, FaMobileAlt, FaDatabase } from 'react-icons/fa';
 import GlassCard from './components/ui/GlassCard';
 import GradientText from './components/ui/GradientText';
@@ -8,6 +9,30 @@ function ProductsServices() {
   return (
     <div className="min-h-screen bg-deep-black text-white font-body overflow-x-hidden">
       <NoiseTexture />
+      
+      {/* Navigation */}
+      <nav className="fixed w-full z-50 bg-deep-black/80 backdrop-blur-xl border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex justify-between items-center">
+          <Link to="/" className="text-2xl font-display font-bold tracking-tight hover:scale-105 transition-transform">
+            DIGITA <GradientText>ENERGY</GradientText>
+          </Link>
+          
+          <div className="flex gap-8 items-center">
+            <Link to="/" className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200">
+              Accueil
+            </Link>
+            <Link to="/#about" className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200">
+              À propos
+            </Link>
+            <Link to="/#services" className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200">
+              Services
+            </Link>
+            <Link to="/products-services" className="text-sm font-medium text-energy-green">
+              Produits & Services
+            </Link>
+          </div>
+        </div>
+      </nav>
       
       {/* Header */}
       <section className="relative pt-32 pb-20">
