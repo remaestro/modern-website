@@ -87,6 +87,13 @@ function ProductsServices() {
                 </li>
                 <li className="flex items-start gap-3 group cursor-pointer hover:translate-x-2 transition-transform">
                   <span className="text-energy-green mt-1">→</span>
+                  <Link to="/products/source-substations" className="flex-1">
+                    <h4 className="font-bold mb-1 group-hover:text-energy-green transition-colors">Postes Sources HT/MT</h4>
+                    <p className="text-sm text-white/60">Sous-stations haute et moyenne tension clé en main</p>
+                  </Link>
+                </li>
+                <li className="flex items-start gap-3 group cursor-pointer hover:translate-x-2 transition-transform">
+                  <span className="text-energy-green mt-1">→</span>
                   <Link to="/products/distribution-posts" className="flex-1">
                     <h4 className="font-bold mb-1 group-hover:text-energy-green transition-colors">Postes de Distribution</h4>
                     <p className="text-sm text-white/60">Infrastructure de distribution intelligente et sécurisée</p>
