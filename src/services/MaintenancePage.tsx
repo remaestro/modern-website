@@ -6,7 +6,7 @@ import GradientText from '../components/ui/GradientText';
 import NoiseTexture from '../components/graphics/NoiseTexture';
 import { FaBolt, FaCheckCircle } from 'react-icons/fa';
 
-function TransformersPage() {
+function MaintenancePage() {
   const [formData, setFormData] = useState({
     companyName: '',
     contactName: '',
@@ -48,7 +48,7 @@ function TransformersPage() {
           
           <div className="flex gap-6 items-center text-sm">
             <Link to="/products-services" className="text-white/70 hover:text-energy-green transition-colors">
-              ← Retour aux produits
+              ← Retour aux services
             </Link>
           </div>
         </div>
@@ -348,4 +348,4 @@ function TransformersPage() {
   );
 }
 
-export default TransformersPage;
+export default MaintenancePage;
