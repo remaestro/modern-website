@@ -8,8 +8,10 @@ import {
   FaNetworkWired, 
   FaSolarPanel, 
   FaShieldAlt, 
-  FaLeaf, 
-  FaUsers 
+  FaUsers,
+  FaStar,
+  FaRocket,
+  FaHeart
 } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 
@@ -665,19 +667,19 @@ function ValuesSection() {
       description: "Nous ne suivons pas les tendances — nous les créons."
     },
     {
-      icon: <FaShieldAlt />,
-      title: 'Fiabilité',
-      description: "99,8% de disponibilité n'est pas un objectif. C'est notre standard."
+      icon: <FaStar />,
+      title: 'Excellence',
+      description: "L'excellence est ce que nous incarnons. Bien n'est jamais suffisant, et c'est pourquoi nous innovons."
     },
     {
-      icon: <FaLeaf />,
-      title: 'Durabilité',
-      description: "L'énergie propre n'est pas optionnelle. Elle est essentielle."
+      icon: <FaRocket />,
+      title: 'Audace',
+      description: "Nous faisons le choix de ne pas capituler dans notre vision de changer l'Afrique et de contribuer à son développement."
     },
     {
-      icon: <FaNetworkWired />,
-      title: 'Partenariat',
-      description: "Votre succès est notre mission."
+      icon: <FaHeart />,
+      title: 'Customer First',
+      description: "Votre succès est notre mission. Nous faisons tous nos efforts pour anticiper vos besoins et dépasser vos attentes."
     }
   ];
 
