@@ -47,7 +47,7 @@ function MaintenancePage() {
           </Link>
           
           <div className="flex gap-6 items-center text-sm">
-            <Link to="/products-services" className="text-white/70 hover:text-energy-green transition-colors">
+            <Link to="/products-services" className="text-white/70 hover:text-cyber-blue transition-colors">
               ← Retour aux services
             </Link>
           </div>
@@ -63,13 +63,13 @@ function MaintenancePage() {
             transition={{ duration: 0.8 }}
           >
             <div className="flex items-center gap-3 mb-6">
-              <FaBolt className="text-4xl text-energy-green" />
+              <FaBolt className="text-4xl text-cyber-blue" />
               <h1 className="font-display text-5xl lg:text-6xl font-bold">
-                Transformateurs <GradientText>HT/MT/BT</GradientText>
+                Maintenance <GradientText>Préventive</GradientText>
               </h1>
             </div>
             <p className="text-xl text-white/70 max-w-3xl">
-              Solutions de transformation électrique haute performance pour vos infrastructures énergétiques
+              Programmes de maintenance avec IA prédictive pour maximiser la disponibilité de vos équipements
             </p>
           </motion.div>
         </div>
@@ -80,43 +80,43 @@ function MaintenancePage() {
           {/* Left: Product Info */}
           <div className="lg:col-span-1 space-y-6">
             <GlassCard className="p-6">
-              <h3 className="font-display text-xl font-bold mb-4">Caractéristiques</h3>
+              <h3 className="font-display text-xl font-bold mb-4">Nos Programmes</h3>
               <ul className="space-y-3 text-sm">
                 <li className="flex items-start gap-2">
-                  <FaCheckCircle className="text-energy-green mt-1 flex-shrink-0" />
-                  <span>Puissance de 50 kVA à 5000 kVA</span>
+                  <FaCheckCircle className="text-cyber-blue mt-1 flex-shrink-0" />
+                  <span>Maintenance préventive planifiée</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <FaCheckCircle className="text-energy-green mt-1 flex-shrink-0" />
-                  <span>Tensions HT/MT/BT personnalisables</span>
+                  <FaCheckCircle className="text-cyber-blue mt-1 flex-shrink-0" />
+                  <span>Maintenance prédictive par IA</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <FaCheckCircle className="text-energy-green mt-1 flex-shrink-0" />
-                  <span>Rendement optimisé ≥ 98%</span>
+                  <FaCheckCircle className="text-cyber-blue mt-1 flex-shrink-0" />
+                  <span>Intervention d'urgence 24/7</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <FaCheckCircle className="text-energy-green mt-1 flex-shrink-0" />
-                  <span>Protection intégrée et monitoring</span>
+                  <FaCheckCircle className="text-cyber-blue mt-1 flex-shrink-0" />
+                  <span>Remplacement de pièces</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <FaCheckCircle className="text-energy-green mt-1 flex-shrink-0" />
-                  <span>Conformité normes internationales</span>
+                  <FaCheckCircle className="text-cyber-blue mt-1 flex-shrink-0" />
+                  <span>Rapports de performance</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <FaCheckCircle className="text-energy-green mt-1 flex-shrink-0" />
-                  <span>Garantie constructeur 5 ans</span>
+                  <FaCheckCircle className="text-cyber-blue mt-1 flex-shrink-0" />
+                  <span>Optimisation continue</span>
                 </li>
               </ul>
             </GlassCard>
 
             <GlassCard className="p-6">
-              <h3 className="font-display text-xl font-bold mb-4">Applications</h3>
+              <h3 className="font-display text-xl font-bold mb-4">Avantages</h3>
               <ul className="space-y-2 text-sm text-white/70">
-                <li>• Réseaux de distribution électrique</li>
-                <li>• Installations industrielles</li>
-                <li>• Centres commerciaux</li>
-                <li>• Infrastructures publiques</li>
-                <li>• Sites miniers et pétroliers</li>
+                <li>• Réduction des pannes imprévues</li>
+                <li>• Prolongation durée de vie équipements</li>
+                <li>• Optimisation des coûts</li>
+                <li>• Amélioration de la disponibilité</li>
+                <li>• Conformité réglementaire</li>
               </ul>
             </GlassCard>
           </div>
