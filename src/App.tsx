@@ -421,9 +421,8 @@ function AboutSection() {
 
             <h2 className="font-display text-display font-bold mb-6 leading-tight">
               La Double Force de
-              <GradientText className="block">
-                l'Énergie & du Digital
-              </GradientText>
+              <br />
+              <GradientText>l'Énergie</GradientText> & <GradientText>du Digital</GradientText>
             </h2>
 
             <p className="text-lg text-white/70 mb-4 leading-relaxed">
