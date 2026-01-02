@@ -745,7 +745,7 @@ function CTASection() {
 
       <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
         <h2 className="font-display text-display font-bold mb-6">
-          Prêt à Alimenter <GradientText>Votre Avenir ?</GradientText>
+          Prêt à <GradientText>Nous Confier Vos Projets ?</GradientText>
         </h2>
         
         <p className="text-xl text-white/70 mb-10">
