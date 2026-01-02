@@ -6,7 +6,6 @@ import NoiseTexture from './components/graphics/NoiseTexture';
 import { 
   FaBolt, 
   FaNetworkWired, 
-  FaSolarPanel, 
   FaShieldAlt, 
   FaUsers,
   FaStar,
@@ -517,7 +516,8 @@ function ServicesSection() {
         'Infrastructure de Cybersécurité'
       ],
       icon: <FaBolt />,
-      gradient: 'from-energy-green to-emerald-400'
+      gradient: 'from-energy-green to-emerald-400',
+      link: '/products-services#energy'
     },
     {
       title: 'Infrastructure Numérique',
@@ -530,20 +530,8 @@ function ServicesSection() {
         'Cloud & Edge Computing'
       ],
       icon: <FaNetworkWired />,
-      gradient: 'from-cyber-blue to-blue-400'
-    },
-    {
-      title: 'Intégration Durable',
-      subtitle: 'Énergie Propre, Mise en Œuvre Intelligente',
-      description: 'Systèmes solaires, éoliens, hybrides — intégrés de manière transparente dans l\'infrastructure existante avec commutation intelligente et optimisation du stockage.',
-      features: [
-        'Intégration des Énergies Renouvelables',
-        'Systèmes de Stockage d\'Énergie',
-        'Solutions de Micro-réseaux',
-        'Suivi Carbone'
-      ],
-      icon: <FaSolarPanel />,
-      gradient: 'from-solar-orange to-yellow-400'
+      gradient: 'from-cyber-blue to-blue-400',
+      link: '/products-services#digital'
     }
   ];
 
@@ -576,7 +564,7 @@ function ServicesSection() {
         </motion.div>
 
         {/* Service Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 gap-8">
           {services.map((service, index) => (
             <motion.div
               key={index}
@@ -584,44 +572,46 @@ function ServicesSection() {
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >
-              <GlassCard className="h-full p-8 group cursor-pointer" hover>
-                {/* Icon */}
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} bg-opacity-20 flex items-center justify-center mb-6 text-3xl text-white group-hover:scale-110 transition-transform duration-300`}>
-                  {service.icon}
-                </div>
+              <a href={service.link}>
+                <GlassCard className="h-full p-8 group cursor-pointer" hover>
+                  {/* Icon */}
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} bg-opacity-20 flex items-center justify-center mb-6 text-3xl text-white group-hover:scale-110 transition-transform duration-300`}>
+                    {service.icon}
+                  </div>
 
-                {/* Title */}
-                <h3 className="font-display text-2xl font-bold mb-2">
-                  {service.title}
-                </h3>
-                <p className="text-sm text-energy-green mb-4 font-semibold">
-                  {service.subtitle}
-                </p>
+                  {/* Title */}
+                  <h3 className="font-display text-2xl font-bold mb-2">
+                    {service.title}
+                  </h3>
+                  <p className="text-sm text-energy-green mb-4 font-semibold">
+                    {service.subtitle}
+                  </p>
 
-                {/* Description */}
-                <p className="text-white/70 mb-6 leading-relaxed">
-                  {service.description}
-                </p>
+                  {/* Description */}
+                  <p className="text-white/70 mb-6 leading-relaxed">
+                    {service.description}
+                  </p>
 
-                {/* Features */}
-                <ul className="space-y-3 mb-6">
-                  {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-white/60">
-                      <span className="text-energy-green mt-1">→</span>
-                      <span>{feature}</span>
+                  {/* Features */}
+                  <ul className="space-y-3 mb-6">
+                    {service.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm text-white/60">
+                        <span className="text-energy-green mt-1">→</span>
+                        <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
 
-                {/* CTA */}
-                <motion.div
-                  whileHover={{ x: 5 }}
-                  className="text-energy-green font-semibold text-sm flex items-center gap-2"
-                >
-                  En Savoir Plus 
-                  <span className="text-lg">→</span>
-                </motion.div>
-              </GlassCard>
+                  {/* CTA */}
+                  <motion.div
+                    whileHover={{ x: 5 }}
+                    className="text-energy-green font-semibold text-sm flex items-center gap-2"
+                  >
+                    En Savoir Plus 
+                    <span className="text-lg">→</span>
+                  </motion.div>
+                </GlassCard>
+              </a>
             </motion.div>
           ))}
         </div>
