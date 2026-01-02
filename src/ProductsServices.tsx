@@ -78,12 +78,12 @@ function ProductsServices() {
                 <h3 className="font-display text-2xl font-bold">Produits</h3>
               </div>
               <ul className="space-y-4">
-                <li className="flex items-start gap-3">
+                <li className="flex items-start gap-3 group cursor-pointer hover:translate-x-2 transition-transform">
                   <span className="text-energy-green mt-1">→</span>
-                  <div>
-                    <h4 className="font-bold mb-1">Transformateurs HT/MT/BT</h4>
+                  <Link to="/products/transformers" className="flex-1">
+                    <h4 className="font-bold mb-1 group-hover:text-energy-green transition-colors">Transformateurs HT/MT/BT</h4>
                     <p className="text-sm text-white/60">Solutions de transformation électrique haute performance</p>
-                  </div>
+                  </Link>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-energy-green mt-1">→</span>
