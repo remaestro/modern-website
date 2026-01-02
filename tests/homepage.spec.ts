@@ -40,10 +40,13 @@ test.describe('Digita Energy Website', () => {
     // Navigate to services
     await page.click('a[href="#services"]');
     
-    // Check service headings (more specific)
+    // Check service headings - now only 2 services
     await expect(page.getByRole('heading', { name: 'Solutions Réseau Intelligent' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Infrastructure Numérique' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Intégration Durable' })).toBeVisible();
+    
+    // Check that service cards have links to products page
+    await expect(page.locator('a[href="/products-services#energy"]')).toBeVisible();
+    await expect(page.locator('a[href="/products-services#digital"]')).toBeVisible();
   });
 
   test('should have video background in hero', async ({ page }) => {

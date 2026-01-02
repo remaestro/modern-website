@@ -1,0 +1,173 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e6]:
+      - generic [ref=e7]: DIGITA ENERGY
+      - generic [ref=e8]:
+        - link "À propos" [ref=e9] [cursor=pointer]:
+          - /url: "#about"
+        - link "Solutions" [ref=e10] [cursor=pointer]:
+          - /url: "#services"
+        - link "Produits & Services" [ref=e11] [cursor=pointer]:
+          - /url: /modern-website/products-services
+        - link "Vision" [ref=e12] [cursor=pointer]:
+          - /url: "#vision"
+        - button "Contact" [ref=e13] [cursor=pointer]: Contact
+  - generic [ref=e15]:
+    - generic [ref=e22]:
+      - heading "DÉVELOPPER L'AFRIQUE" [level=1] [ref=e23]:
+        - generic [ref=e25]: DÉVELOPPER
+        - generic [ref=e26]: L'AFRIQUE
+      - generic [ref=e27]:
+        - button "Découvrir nos solutions" [ref=e28] [cursor=pointer]
+        - button "Démarrer votre projet →" [ref=e29] [cursor=pointer]
+      - generic [ref=e30]:
+        - generic [ref=e31]:
+          - img [ref=e33]
+          - generic [ref=e36]: 1.2GW+
+          - generic [ref=e37]: Énergie Gérée
+        - generic [ref=e38]:
+          - img [ref=e40]
+          - generic [ref=e43]: 450+
+          - generic [ref=e44]: Projets Livrés
+        - generic [ref=e45]:
+          - img [ref=e47]
+          - generic [ref=e49]: "12"
+          - generic [ref=e50]: Pays
+        - generic [ref=e51]:
+          - img [ref=e53]
+          - generic [ref=e56]: 99.8%
+          - generic [ref=e57]: Disponibilité SLA
+    - generic [ref=e60]: DÉFILER
+  - generic [ref=e81]:
+    - generic [ref=e82]: Qui Sommes-Nous
+    - heading "La Double Force de l'Énergie & du Digital" [level=2] [ref=e83]:
+      - generic [ref=e84]: La Double Force de
+      - generic [ref=e85]: l'Énergie & du Digital
+    - paragraph [ref=e86]: "Nous incarnons une dualité puissante : moderniser le réseau électrique africain tout en accélérant sa transformation digitale."
+    - paragraph [ref=e87]: "D'un côté, nous déployons des infrastructures énergétiques intelligentes — réseaux HT/MT/BT, systèmes SCADA, intégration d'énergies renouvelables. De l'autre, nous bâtissons l'épine dorsale numérique de l'Afrique : plateformes IoT, solutions cloud, analytics en temps réel."
+    - paragraph [ref=e88]: Cette double expertise fait de nous plus qu'un simple opérateur — nous sommes les architectes de l'Afrique connectée et énergisée.
+    - generic [ref=e89]:
+      - generic [ref=e93]: Modernisation des Réseaux Électriques Intelligents
+      - generic [ref=e97]: Digitalisation & Transformation Numérique
+      - generic [ref=e101]: Infrastructure Durable et Évolutive
+      - generic [ref=e105]: Innovation Africaine pour Défis Africains
+  - generic [ref=e108]:
+    - generic [ref=e109]:
+      - generic [ref=e110]: Ce Que Nous Faisons
+      - heading "Solutions Complètes Énergie & Numérique" [level=2] [ref=e111]
+      - paragraph [ref=e112]: Des solutions complètes qui font le pont entre l'énergie traditionnelle et l'avenir numérique
+    - generic [ref=e113]:
+      - link "Solutions Réseau Intelligent Distribution Électrique Intelligente Nous concevons, construisons et optimisons des réseaux électriques intelligents combinant infrastructure traditionnelle et IoT de pointe, surveillance IA et maintenance prédictive. → Systèmes SCADA & Téléconduite → Intégration Réseau HT/MT/BT → Analytique Réseau en Temps Réel → Infrastructure de Cybersécurité En Savoir Plus →" [ref=e115] [cursor=pointer]:
+        - /url: /modern-website/products-services#energy
+        - generic [ref=e116]:
+          - img [ref=e118]
+          - heading "Solutions Réseau Intelligent" [level=3] [ref=e120]
+          - paragraph [ref=e121]: Distribution Électrique Intelligente
+          - paragraph [ref=e122]: Nous concevons, construisons et optimisons des réseaux électriques intelligents combinant infrastructure traditionnelle et IoT de pointe, surveillance IA et maintenance prédictive.
+          - list [ref=e123]:
+            - listitem [ref=e124]:
+              - generic [ref=e125]: →
+              - generic [ref=e126]: Systèmes SCADA & Téléconduite
+            - listitem [ref=e127]:
+              - generic [ref=e128]: →
+              - generic [ref=e129]: Intégration Réseau HT/MT/BT
+            - listitem [ref=e130]:
+              - generic [ref=e131]: →
+              - generic [ref=e132]: Analytique Réseau en Temps Réel
+            - listitem [ref=e133]:
+              - generic [ref=e134]: →
+              - generic [ref=e135]: Infrastructure de Cybersécurité
+          - generic [ref=e136]:
+            - text: En Savoir Plus
+            - generic [ref=e137]: →
+      - link "Infrastructure Numérique Technologie Qui Alimente le Progrès De l'architecture cloud aux logiciels personnalisés, nous construisons l'épine dorsale numérique dont les systèmes énergétiques modernes ont besoin. → Développement Plateforme IoT → Systèmes de Gestion Énergétique → Analytique de Données & BI → Cloud & Edge Computing En Savoir Plus →" [ref=e139] [cursor=pointer]:
+        - /url: /modern-website/products-services#digital
+        - generic [ref=e140]:
+          - img [ref=e142]
+          - heading "Infrastructure Numérique" [level=3] [ref=e144]
+          - paragraph [ref=e145]: Technologie Qui Alimente le Progrès
+          - paragraph [ref=e146]: De l'architecture cloud aux logiciels personnalisés, nous construisons l'épine dorsale numérique dont les systèmes énergétiques modernes ont besoin.
+          - list [ref=e147]:
+            - listitem [ref=e148]:
+              - generic [ref=e149]: →
+              - generic [ref=e150]: Développement Plateforme IoT
+            - listitem [ref=e151]:
+              - generic [ref=e152]: →
+              - generic [ref=e153]: Systèmes de Gestion Énergétique
+            - listitem [ref=e154]:
+              - generic [ref=e155]: →
+              - generic [ref=e156]: Analytique de Données & BI
+            - listitem [ref=e157]:
+              - generic [ref=e158]: →
+              - generic [ref=e159]: Cloud & Edge Computing
+          - generic [ref=e160]:
+            - text: En Savoir Plus
+            - generic [ref=e161]: →
+  - generic [ref=e164]:
+    - heading "Notre Vision pour 2030" [level=2] [ref=e165]
+    - blockquote [ref=e166]: "\"Un réseau énergétique durable et entièrement connecté à travers l'Afrique — où l'énergie est propre, fiable et intelligemment distribuée.\""
+  - generic [ref=e168]:
+    - heading "Ce Qui Nous Anime" [level=2] [ref=e170]
+    - generic [ref=e171]:
+      - generic [ref=e173]:
+        - img [ref=e175]
+        - heading "Innovation" [level=3] [ref=e177]
+        - paragraph [ref=e178]: Nous ne suivons pas les tendances — nous les créons.
+      - generic [ref=e180]:
+        - img [ref=e182]
+        - heading "Excellence" [level=3] [ref=e184]
+        - paragraph [ref=e185]: L'excellence est ce que nous incarnons. Bien n'est jamais suffisant, et c'est pourquoi nous innovons.
+      - generic [ref=e187]:
+        - img [ref=e189]
+        - heading "Audace" [level=3] [ref=e191]
+        - paragraph [ref=e192]: Nous faisons le choix de ne pas capituler dans notre vision de changer l'Afrique et de contribuer à son développement.
+      - generic [ref=e194]:
+        - img [ref=e196]
+        - heading "Customer First" [level=3] [ref=e198]
+        - paragraph [ref=e199]: Votre succès est notre mission. Nous faisons tous nos efforts pour anticiper vos besoins et dépasser vos attentes.
+  - generic [ref=e203]:
+    - heading "Prêt à Nous Confier Vos Projets ?" [level=2] [ref=e204]
+    - paragraph [ref=e205]: Discutons de la façon dont nos solutions peuvent transformer votre infrastructure énergétique.
+    - generic [ref=e206]:
+      - button "Planifier une Consultation" [ref=e207] [cursor=pointer]
+      - button "Télécharger les Études de Cas" [ref=e208] [cursor=pointer]
+  - contentinfo [ref=e209]:
+    - generic [ref=e210]:
+      - generic [ref=e211]:
+        - generic [ref=e212]:
+          - generic [ref=e213]: DIGITA ENERGY
+          - paragraph [ref=e214]: Énergiser l'Avenir de l'Afrique par l'Innovation et la Technologie
+        - generic [ref=e215]:
+          - heading "Solutions" [level=4] [ref=e216]
+          - list [ref=e217]:
+            - listitem [ref=e218]:
+              - link "Réseau Intelligent" [ref=e219] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e220]:
+              - link "Infrastructure Numérique" [ref=e221] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e222]:
+              - link "Énergie Durable" [ref=e223] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e224]:
+          - heading "Entreprise" [level=4] [ref=e225]
+          - list [ref=e226]:
+            - listitem [ref=e227]:
+              - link "À Propos" [ref=e228] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e229]:
+              - link "Vision" [ref=e230] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e231]:
+              - link "Carrières" [ref=e232] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e233]:
+          - heading "Contact" [level=4] [ref=e234]
+          - list [ref=e235]:
+            - listitem [ref=e236]: contact@digita-energy.com
+            - listitem [ref=e237]: +225 XX XX XX XX XX
+      - paragraph [ref=e239]: © 2025 Digita Energy. Tous droits réservés.
+```
