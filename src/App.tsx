@@ -378,8 +378,9 @@ function AboutSection() {
             initial={{ opacity: 0, x: -50 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
+            className="lg:col-span-1"
           >
-            <GlassCard className="p-8" hover>
+            <GlassCard className="p-4" hover>
               <div className="aspect-[4/3] bg-gradient-to-br from-energy-green/20 to-cyber-blue/20 rounded-xl flex items-center justify-center relative overflow-hidden">
                 {/* Video Background */}
                 <video 
