@@ -373,12 +373,12 @@ function AboutSection() {
       
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left: Visual */}
+          {/* Left: Visual - Hidden on mobile */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-1"
+            className="hidden lg:block"
           >
             <GlassCard className="p-4" hover>
               <div className="aspect-[4/3] bg-gradient-to-br from-energy-green/20 to-cyber-blue/20 rounded-xl flex items-center justify-center relative overflow-hidden">
@@ -430,6 +430,35 @@ function AboutSection() {
             <p className="text-lg text-white/70 mb-4 leading-relaxed">
               Nous incarnons <span className="text-energy-green font-semibold">une dualité puissante</span> : moderniser le réseau électrique africain tout en accélérant sa transformation digitale.
             </p>
+
+            {/* Video inline on mobile */}
+            <div className="lg:hidden mb-6">
+              <GlassCard className="p-4" hover>
+                <div className="aspect-[4/3] bg-gradient-to-br from-energy-green/20 to-cyber-blue/20 rounded-xl flex items-center justify-center relative overflow-hidden">
+                  <video 
+                    autoPlay={true}
+                    loop={true}
+                    muted={true}
+                    playsInline={true}
+                    className="absolute inset-0 w-full h-full object-cover rounded-xl"
+                    onLoadedMetadata={(e) => {
+                      const video = e.currentTarget;
+                      video.addEventListener('timeupdate', () => {
+                        if (video.currentTime >= 4) {
+                          video.currentTime = 0;
+                        }
+                      });
+                    }}
+                  >
+                    <source src="/modern-website/assets/about-video-full.mp4" type="video/mp4" />
+                  </video>
+                  <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-energy-green z-10" />
+                  <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-energy-green z-10" />
+                  <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-energy-green z-10" />
+                  <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-energy-green z-10" />
+                </div>
+              </GlassCard>
+            </div>
 
             <p className="text-lg text-white/70 mb-4 leading-relaxed">
               D'un côté, nous <span className="text-cyber-blue font-semibold">déployons des infrastructures énergétiques intelligentes</span> — réseaux HT/MT/BT, systèmes SCADA, intégration d'énergies renouvelables. De l'autre, nous <span className="text-cyber-blue font-semibold">bâtissons l'épine dorsale numérique</span> de l'Afrique : plateformes IoT, solutions cloud, analytics en temps réel.
