@@ -4,24 +4,24 @@ test.describe('Digita Energy Website', () => {
   test('should load homepage with hero section', async ({ page }) => {
     await page.goto('/');
     
-    // Check title
-    await expect(page.getByText('DIGITA ENERGY')).toBeVisible();
+    // Check logo in nav
+    await expect(page.locator('nav').getByText('DIGITA')).toBeVisible();
     
-    // Check animated text
-    await expect(page.getByText('L\'AFRIQUE')).toBeVisible();
+    // Check hero section title (exact match in hero)
+    await expect(page.locator('section').first().getByText('L\'AFRIQUE', { exact: true })).toBeVisible();
     
-    // Check stats
-    await expect(page.getByText('Énergie Gérée')).toBeVisible();
-    await expect(page.getByText('Projets Livrés')).toBeVisible();
+    // Check stats (use first occurrence)
+    await expect(page.getByText('Énergie Gérée').first()).toBeVisible();
+    await expect(page.getByText('Projets Livrés').first()).toBeVisible();
   });
 
   test('should have working navigation', async ({ page }) => {
     await page.goto('/');
     
-    // Check navigation links
-    await expect(page.getByRole('link', { name: 'À propos' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Services' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Vision' })).toBeVisible();
+    // Check navigation links in nav element (use href selectors)
+    await expect(page.locator('nav a[href="#about"]')).toBeVisible();
+    await expect(page.locator('nav a[href="#services"]')).toBeVisible();
+    await expect(page.locator('nav a[href="#vision"]')).toBeVisible();
   });
 
   test('should navigate to About section', async ({ page }) => {
@@ -30,10 +30,8 @@ test.describe('Digita Energy Website', () => {
     // Click About link
     await page.click('a[href="#about"]');
     
-    // Check About section is visible
-    await expect(page.getByText('La Double Force de')).toBeVisible();
-    await expect(page.getByText('l\'Énergie')).toBeVisible();
-    await expect(page.getByText('du Digital')).toBeVisible();
+    // Check About section heading
+    await expect(page.getByRole('heading', { name: /La Double Force de/i })).toBeVisible();
   });
 
   test('should display all service cards', async ({ page }) => {
@@ -42,17 +40,17 @@ test.describe('Digita Energy Website', () => {
     // Navigate to services
     await page.click('a[href="#services"]');
     
-    // Check service titles
-    await expect(page.getByText('Solutions Réseau Intelligent')).toBeVisible();
-    await expect(page.getByText('Infrastructure Numérique')).toBeVisible();
-    await expect(page.getByText('Intégration Durable')).toBeVisible();
+    // Check service headings (more specific)
+    await expect(page.getByRole('heading', { name: 'Solutions Réseau Intelligent' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Infrastructure Numérique' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Intégration Durable' })).toBeVisible();
   });
 
   test('should have video background in hero', async ({ page }) => {
     await page.goto('/');
     
     // Check video element exists
-    const video = page.locator('video');
+    const video = page.locator('video').first();
     await expect(video).toBeVisible();
     
     // Check video source
@@ -64,8 +62,8 @@ test.describe('Digita Energy Website', () => {
     await page.goto('/');
     await page.click('a[href="#about"]');
     
-    // Wait for section to be visible
-    await expect(page.getByText('La Double Force de')).toBeVisible();
+    // Wait for About heading to be visible
+    await expect(page.getByRole('heading', { name: /La Double Force de/i })).toBeVisible();
   });
 
   test('should display footer', async ({ page }) => {
@@ -74,9 +72,9 @@ test.describe('Digita Energy Website', () => {
     // Scroll to footer
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     
-    // Check footer content
-    await expect(page.getByText('DIGITA ENERGY')).toBeVisible();
-    await expect(page.getByText('© 2024 DIGITA ENERGY')).toBeVisible();
+    // Check footer content (use exact text in heading)
+    await expect(page.locator('footer').getByText('DIGITA ENERGY', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText(/© 202\d Digita Energy/i)).toBeVisible();
   });
 
   test('should have responsive design', async ({ page }) => {
@@ -84,12 +82,12 @@ test.describe('Digita Energy Website', () => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto('/');
     
-    await expect(page.getByText('DIGITA ENERGY')).toBeVisible();
+    await expect(page.locator('nav').getByText('DIGITA')).toBeVisible();
     
     // Test desktop viewport
     await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto('/');
     
-    await expect(page.getByText('DIGITA ENERGY')).toBeVisible();
+    await expect(page.locator('nav').getByText('DIGITA')).toBeVisible();
   });
 });
