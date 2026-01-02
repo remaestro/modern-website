@@ -13,6 +13,7 @@ function SCADAPage() {
     email: '',
     phone: '',
     systemType: '',
+    brand: '',
     pointsCount: '',
     networkSize: '',
     integration: '',
@@ -209,6 +210,50 @@ function SCADAPage() {
                         <option value="upgrade">Upgrade système existant</option>
                         <option value="extension">Extension système</option>
                         <option value="remplacement">Remplacement</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold mb-2">Marque souhaitée (optionnel)</label>
+                      <select
+                        name="brand"
+                        value={formData.brand}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-energy-green focus:outline-none transition-colors"
+                      >
+                        <option value="">Aucune préférence</option>
+                        <optgroup label="Leaders mondiaux">
+                          <option value="Schneider Electric">Schneider Electric</option>
+                          <option value="Siemens">Siemens</option>
+                          <option value="ABB">ABB</option>
+                          <option value="GE Grid Solutions">GE Grid Solutions</option>
+                          <option value="Hitachi Energy">Hitachi Energy</option>
+                        </optgroup>
+                        <optgroup label="Spécialistes SCADA">
+                          <option value="Wonderware">Wonderware (AVEVA)</option>
+                          <option value="Iconics">Iconics</option>
+                          <option value="Inductive Automation">Inductive Automation (Ignition)</option>
+                          <option value="ClearSCADA">ClearSCADA</option>
+                          <option value="Simatic WinCC">Simatic WinCC (Siemens)</option>
+                          <option value="iFIX">iFIX (GE)</option>
+                          <option value="Citect SCADA">Citect SCADA (Schneider)</option>
+                        </optgroup>
+                        <optgroup label="Solutions open-source">
+                          <option value="EPICS">EPICS</option>
+                          <option value="OpenSCADA">OpenSCADA</option>
+                          <option value="Rapid SCADA">Rapid SCADA</option>
+                        </optgroup>
+                        <optgroup label="Fournisseurs spécialisés">
+                          <option value="Yokogawa">Yokogawa</option>
+                          <option value="Emerson">Emerson</option>
+                          <option value="Honeywell">Honeywell</option>
+                          <option value="Rockwell Automation">Rockwell Automation</option>
+                          <option value="OMICRON">OMICRON</option>
+                          <option value="SEL">SEL (Schweitzer Engineering)</option>
+                        </optgroup>
+                        <optgroup label="Autres">
+                          <option value="Autre">Autre marque</option>
+                        </optgroup>
                       </select>
                     </div>
 
