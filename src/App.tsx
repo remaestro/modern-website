@@ -420,7 +420,7 @@ function AboutSection() {
             </div>
 
             <h2 className="font-display text-display font-bold mb-6 leading-tight">
-              <span className="block">La Double Force de</span>
+              <span className="block whitespace-nowrap">La Double Force de</span>
               <span className="block"><GradientText>l'Énergie</GradientText> & <GradientText>du Digital</GradientText></span>
             </h2>
 
