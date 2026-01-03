@@ -4,7 +4,8 @@ import { useState } from 'react';
 import GlassCard from '../components/ui/GlassCard';
 import GradientText from '../components/ui/GradientText';
 import NoiseTexture from '../components/graphics/NoiseTexture';
-import { FaBolt, FaCheckCircle } from 'react-icons/fa';
+import { FaBolt, FaCheckCircle, FaSpinner } from 'react-icons/fa';
+import { sendEmailWithRetry } from '../services/emailService';
 
 function TransformersPage() {
   const [formData, setFormData] = useState({
@@ -22,10 +23,51 @@ function TransformersPage() {
     specificNeeds: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Demande envoyée avec succès ! Nous vous contacterons sous peu.');
+    setIsSubmitting(true);
+    setShowError(false);
+    
+    try {
+      const result = await sendEmailWithRetry({
+        formType: 'TRANSFORMER',
+        data: {
+          ...formData,
+          timestamp: new Date().toISOString(),
+          pageUrl: window.location.href
+        }
+      });
+
+      if (result.success) {
+        setShowSuccess(true);
+        setFormData({
+          companyName: '',
+          contactName: '',
+          email: '',
+          phone: '',
+          transformerType: '',
+          power: '',
+          voltage: '',
+          quantity: '',
+          installation: '',
+          timeline: '',
+          budget: '',
+          specificNeeds: ''
+        });
+        setTimeout(() => setShowSuccess(false), 5000);
+      } else {
+        throw new Error(result.message);
+      }
+    } catch (error: any) {
+      console.error('Erreur soumission:', error);
+      setShowError(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

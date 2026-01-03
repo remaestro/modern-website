@@ -179,67 +179,97 @@ function ProductsServices() {
             <GlassCard className="p-8" hover>
               <FaCloud className="text-4xl text-cyber-blue mb-4" />
               <h3 className="font-display text-xl font-bold mb-3">Cloud & Infrastructure</h3>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white/70 mb-4">
                 <li>→ Architecture Cloud Native</li>
                 <li>→ Migration Cloud</li>
                 <li>→ DevOps & CI/CD</li>
                 <li>→ Infrastructure as Code</li>
               </ul>
+              <Link 
+                to="/digital/cloud-infrastructure"
+                className="inline-block px-4 py-2 bg-gradient-to-r from-energy-green to-cyber-blue rounded text-sm font-bold hover:opacity-90 transition-all"
+              >
+                Démarrer l'audit →
+              </Link>
             </GlassCard>
 
             <GlassCard className="p-8" hover>
               <FaServer className="text-4xl text-cyber-blue mb-4" />
               <h3 className="font-display text-xl font-bold mb-3">Plateformes IoT</h3>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white/70 mb-4">
                 <li>→ Développement IoT</li>
                 <li>→ Edge Computing</li>
                 <li>→ Gestion de Capteurs</li>
                 <li>→ Intégration MQTT/REST</li>
               </ul>
+              <Link 
+                to="/digital/iot-platform"
+                className="inline-block px-4 py-2 bg-gradient-to-r from-energy-green to-cyber-blue rounded text-sm font-bold hover:opacity-90 transition-all"
+              >
+                Configurer IoT →
+              </Link>
             </GlassCard>
 
             <GlassCard className="p-8" hover>
               <FaChartLine className="text-4xl text-cyber-blue mb-4" />
               <h3 className="font-display text-xl font-bold mb-3">Data & Analytics</h3>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white/70 mb-4">
                 <li>→ Business Intelligence</li>
                 <li>→ Data Warehousing</li>
                 <li>→ Analytics Temps Réel</li>
                 <li>→ Machine Learning</li>
               </ul>
+              <Link 
+                to="/digital/data-analytics"
+                className="inline-block px-4 py-2 bg-gradient-to-r from-energy-green to-cyber-blue rounded text-sm font-bold hover:opacity-90 transition-all"
+              >
+                Évaluer maturité →
+              </Link>
             </GlassCard>
 
             <GlassCard className="p-8" hover>
               <FaDatabase className="text-4xl text-cyber-blue mb-4" />
               <h3 className="font-display text-xl font-bold mb-3">Systèmes de Gestion</h3>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white/70 mb-4">
                 <li>→ ERP Énergétique</li>
                 <li>→ Gestion de Flotte</li>
                 <li>→ CRM & Facturation</li>
                 <li>→ Workflow Automation</li>
               </ul>
+              <span className="inline-block px-4 py-2 bg-white/5 border border-white/10 rounded text-sm text-white/50">
+                Bientôt disponible
+              </span>
             </GlassCard>
 
             <GlassCard className="p-8" hover>
               <FaMobileAlt className="text-4xl text-cyber-blue mb-4" />
               <h3 className="font-display text-xl font-bold mb-3">Applications Mobiles</h3>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white/70 mb-4">
                 <li>→ Apps iOS & Android</li>
                 <li>→ Progressive Web Apps</li>
                 <li>→ Applications Terrain</li>
                 <li>→ Interfaces Utilisateur</li>
               </ul>
+              <Link 
+                to="/digital/mobile-apps"
+                className="inline-block px-4 py-2 bg-gradient-to-r from-energy-green to-cyber-blue rounded text-sm font-bold hover:opacity-90 transition-all"
+              >
+                Créer app →
+              </Link>
             </GlassCard>
 
             <GlassCard className="p-8" hover>
               <FaNetworkWired className="text-4xl text-cyber-blue mb-4" />
               <h3 className="font-display text-xl font-bold mb-3">Intégration & API</h3>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white/70 mb-4">
                 <li>→ API REST/GraphQL</li>
                 <li>→ Intégration Systèmes</li>
                 <li>→ Middleware</li>
                 <li>→ Microservices</li>
               </ul>
+              <span className="inline-block px-4 py-2 bg-white/5 border border-white/10 rounded text-sm text-white/50">
+                Bientôt disponible
+              </span>
             </GlassCard>
           </div>
         </div>

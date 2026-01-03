@@ -5,6 +5,8 @@ import GlassCard from '../components/ui/GlassCard';
 import GradientText from '../components/ui/GradientText';
 import NoiseTexture from '../components/graphics/NoiseTexture';
 import { FaBolt, FaCheckCircle, FaCalendarAlt, FaMapMarkerAlt, FaTools } from 'react-icons/fa';
+import { useContactForm, SubmitButton, FormFeedback } from '../components/ContactForm';
+import { sendEmailWithRetry } from '../services/emailService';
 
 interface FormData {
   projectName: string;
@@ -82,9 +84,17 @@ function InstallationPage() {
     setFormData({ ...formData, [field]: updated });
   };
 
-  const handleSubmit = () => {
-    console.log('Installation request submitted:', formData);
-    alert('Demande d\'installation envoyée ! Notre équipe vous contactera sous 24h pour confirmer la planification.');
+  const handleSubmit = async () => {
+    try {
+      await sendEmailWithRetry({
+        formType: 'INSTALLATION',
+        data: formData
+      });
+      alert('✅ Demande d\'installation envoyée ! Notre équipe vous contactera sous 24h.');
+    } catch (error) {
+      console.error('Erreur envoi:', error);
+      alert('❌ Erreur lors de l\'envoi. Veuillez réessayer.');
+    }
   };
 
   const canProceed = () => {

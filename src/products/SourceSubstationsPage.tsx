@@ -5,6 +5,7 @@ import GlassCard from '../components/ui/GlassCard';
 import GradientText from '../components/ui/GradientText';
 import NoiseTexture from '../components/graphics/NoiseTexture';
 import { FaBolt, FaCheckCircle } from 'react-icons/fa';
+import { useContactForm, SubmitButton, FormFeedback } from '../components/ContactForm';
 
 function SourceSubstationsPage() {
   const [formData, setFormData] = useState({
@@ -23,10 +24,28 @@ function SourceSubstationsPage() {
     specificNeeds: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { isSubmitting, showSuccess, showError, errorMessage, submitForm } = useContactForm('SOURCE_SUBSTATION');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Demande envoyée avec succès ! Nous vous contacterons sous peu.');
+    const success = await submitForm(formData);
+    if (success) {
+      setFormData({
+        companyName: '',
+        contactName: '',
+        email: '',
+        phone: '',
+        substationType: '',
+        primaryVoltage: '',
+        secondaryVoltage: '',
+        power: '',
+        configuration: '',
+        location: '',
+        timeline: '',
+        budget: '',
+        specificNeeds: ''
+      });
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

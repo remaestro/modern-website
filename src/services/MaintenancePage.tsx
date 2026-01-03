@@ -1,128 +1,134 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import GlassCard from '../components/ui/GlassCard';
 import GradientText from '../components/ui/GradientText';
 import NoiseTexture from '../components/graphics/NoiseTexture';
-import { FaBolt, FaCheckCircle, FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import { FaBolt, FaCheckCircle, FaInfoCircle, FaTools } from 'react-icons/fa';
+import { useContactForm, SubmitButton, FormFeedback } from '../components/ContactForm';
+import { sendEmailWithRetry } from '../services/emailService';
 
-type MaintenancePlan = 'basic' | 'standard' | 'premium' | 'custom';
+const STEPS = [
+  { id: 1, title: 'Type de Maintenance', duration: '30s' },
+  { id: 2, title: 'Équipements', duration: '45s' },
+  { id: 3, title: 'Fréquence & Planning', duration: '45s' },
+  { id: 4, title: 'Détails & Contraintes', duration: '1m' },
+  { id: 5, title: 'Contact & Validation', duration: '30s' }
+];
 
-interface Equipment {
-  type: string;
-  quantity: number;
-  power: string;
-  age: string;
+interface FormData {
+  maintenanceType: string;
+  urgency: string;
+  contractType: string;
+  equipmentType: string[];
+  voltageLevel: string;
+  quantity: string;
+  frequency: string;
+  preferredSchedule: string;
+  location: string;
+  accessConstraints: string[];
+  additionalNotes: string;
+  companyName: string;
+  contactName: string;
+  email: string;
+  phone: string;
+  startDate: string;
+  contactPreference: string;
 }
 
 function MaintenancePage() {
-  const [step, setStep] = useState(1);
-  const [selectedPlan, setSelectedPlan] = useState<MaintenancePlan | null>(null);
-  const [equipments, setEquipments] = useState<Equipment[]>([
-    { type: '', quantity: 1, power: '', age: '' }
-  ]);
-  const [formData, setFormData] = useState({
-    // Step 1: Plan selection
-    plan: '',
-    // Step 2: Equipment inventory
-    equipmentList: [] as Equipment[],
-    // Step 3: Service options
-    preventiveMaintenance: true,
-    predictiveMaintenance: false,
-    emergency24_7: false,
-    sparePartsStock: false,
-    performanceReporting: false,
-    trainingProgram: false,
-    // Step 4: Contract details
-    contractDuration: '12',
-    startDate: '',
-    siteLocation: '',
-    accessRestrictions: '',
-    // Step 5: Contact
+  const [currentStep, setCurrentStep] = useState(1);
+  const [formData, setFormData] = useState<FormData>({
+    maintenanceType: '',
+    urgency: '',
+    contractType: '',
+    equipmentType: [],
+    voltageLevel: '',
+    quantity: '',
+    frequency: '',
+    preferredSchedule: '',
+    location: '',
+    accessConstraints: [],
+    additionalNotes: '',
     companyName: '',
     contactName: '',
     email: '',
     phone: '',
-    additionalNotes: ''
+    startDate: '',
+    contactPreference: ''
   });
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  const plans = {
-    basic: {
-      name: 'Basique',
-      price: '150',
-      features: ['Maintenance préventive annuelle', 'Rapports basiques', 'Support email'],
-      color: 'from-gray-500 to-gray-600',
-      popular: false
-    },
-    standard: {
-      name: 'Standard',
-      price: '350',
-      features: ['Maintenance préventive trimestrielle', 'Rapports détaillés', 'Support téléphonique', 'Intervention sous 48h'],
-      color: 'from-cyber-blue to-purple-500',
-      popular: true
-    },
-    premium: {
-      name: 'Premium',
-      price: '750',
-      features: ['Maintenance préventive mensuelle', 'IA prédictive', 'Support 24/7', 'Intervention sous 12h', 'Stock de pièces dédié', 'Formation équipe'],
-      color: 'from-energy-green to-cyan-400',
-      popular: false
-    },
-    custom: {
-      name: 'Sur Mesure',
-      price: 'Sur devis',
-      features: ['Configuration personnalisée', 'SLA adapté', 'Services dédiés'],
-      color: 'from-purple-500 to-pink-500',
-      popular: false
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentStep]);
+
+  const handleNext = () => {
+    if (currentStep < STEPS.length) {
+      setCurrentStep(currentStep + 1);
     }
   };
 
-  const addEquipment = () => {
-    setEquipments([...equipments, { type: '', quantity: 1, power: '', age: '' }]);
+  const handlePrevious = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
   };
 
-  const removeEquipment = (index: number) => {
-    setEquipments(equipments.filter((_, i) => i !== index));
+  const handleSubmit = async () => {
+    try {
+      await sendEmailWithRetry({
+        formType: 'MAINTENANCE',
+        data: formData
+      });
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+        setCurrentStep(1);
+        setFormData({
+          maintenanceType: '',
+          urgency: '',
+          contractType: '',
+          equipmentType: [],
+          voltageLevel: '',
+          quantity: '',
+          frequency: '',
+          preferredSchedule: '',
+        location: '',
+        accessConstraints: [],
+        additionalNotes: '',
+        companyName: '',
+        contactName: '',
+        email: '',
+        phone: '',
+        startDate: '',
+        contactPreference: ''
+      });
+    }, 3000);
+    } catch (error) {
+      console.error('Erreur envoi:', error);
+      alert('❌ Erreur lors de l\'envoi. Veuillez réessayer.');
+    }
   };
 
-  const updateEquipment = (index: number, field: keyof Equipment, value: string | number) => {
-    const updated = [...equipments];
-    updated[index] = { ...updated[index], [field]: value };
-    setEquipments(updated);
+  const updateFormData = (field: keyof FormData, value: any) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleNext = () => {
-    if (step < 5) setStep(step + 1);
-  };
-
-  const handleBack = () => {
-    if (step > 1) setStep(step - 1);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Contract request:', { ...formData, plan: selectedPlan, equipments });
-    alert('Demande de contrat envoyée avec succès ! Notre équipe vous contactera sous 24h.');
-  };
-
-  const estimatePrice = () => {
-    if (!selectedPlan) return 0;
-    const basePrice = selectedPlan === 'basic' ? 150 : selectedPlan === 'standard' ? 350 : selectedPlan === 'premium' ? 750 : 500;
-    const equipmentCount = equipments.reduce((sum, eq) => sum + eq.quantity, 0);
-    const optionsPrice = 
-      (formData.predictiveMaintenance ? 200 : 0) +
-      (formData.emergency24_7 ? 150 : 0) +
-      (formData.sparePartsStock ? 100 : 0) +
-      (formData.performanceReporting ? 50 : 0) +
-      (formData.trainingProgram ? 80 : 0);
-    return (basePrice * equipmentCount) + optionsPrice;
+  const toggleArrayValue = (field: keyof FormData, value: string) => {
+    setFormData(prev => {
+      const currentArray = prev[field] as string[];
+      const newArray = currentArray.includes(value)
+        ? currentArray.filter(item => item !== value)
+        : [...currentArray, value];
+      return { ...prev, [field]: newArray };
+    });
   };
 
   return (
     <div className="min-h-screen bg-deep-black text-white font-body overflow-x-hidden">
       <NoiseTexture />
       
-      {/* Navigation */}
       <nav className="fixed w-full z-50 bg-deep-black/80 backdrop-blur-xl border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex justify-between items-center">
           <Link to="/" className="text-2xl font-display font-bold tracking-tight hover:scale-105 transition-transform">
@@ -130,14 +136,13 @@ function MaintenancePage() {
           </Link>
           
           <div className="flex gap-6 items-center text-sm">
-            <Link to="/products-services" className="text-white/70 hover:text-cyber-blue transition-colors">
+            <Link to="/products-services" className="text-white/70 hover:text-energy-green transition-colors">
               ← Retour aux services
             </Link>
           </div>
         </div>
       </nav>
 
-      {/* Header */}
       <section className="relative pt-32 pb-12">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
@@ -146,492 +151,388 @@ function MaintenancePage() {
             transition={{ duration: 0.8 }}
           >
             <div className="flex items-center gap-3 mb-6">
-              <FaBolt className="text-4xl text-cyber-blue" />
-              <h1 className="font-display text-5xl lg:text-6xl font-bold">
-                Maintenance <GradientText>Préventive</GradientText>
+              <FaTools className="text-4xl text-cyber-blue" />
+              <h1 className="font-display text-4xl lg:text-5xl font-bold">
+                Maintenance <GradientText>Préventive & Corrective</GradientText>
               </h1>
             </div>
             <p className="text-xl text-white/70 max-w-3xl">
-              Programmes de maintenance avec IA prédictive pour maximiser la disponibilité de vos équipements
+              Configurez votre contrat de maintenance pour assurer la fiabilité et la longévité de vos équipements électriques
             </p>
           </motion.div>
         </div>
       </section>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
-        <div className="grid lg:grid-cols-4 gap-8">
-          {/* Left Sidebar: Progress & Summary */}
-          <div className="lg:col-span-1">
-            <GlassCard className="p-6 sticky top-24">
-              <h3 className="font-display text-sm font-bold mb-4 text-white/60">ÉTAPES</h3>
-              <div className="space-y-3 mb-8">
-                {[
-                  { num: 1, label: 'Formule' },
-                  { num: 2, label: 'Équipements' },
-                  { num: 3, label: 'Options' },
-                  { num: 4, label: 'Contrat' },
-                  { num: 5, label: 'Contact' }
-                ].map(s => (
-                  <div key={s.num} className={`flex items-center gap-3 ${step >= s.num ? 'text-energy-green' : 'text-white/30'}`}>
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                      step > s.num ? 'bg-energy-green text-deep-black' :
-                      step === s.num ? 'bg-energy-green/20 border-2 border-energy-green' :
-                      'bg-white/5'
-                    }`}>
-                      {step > s.num ? '✓' : s.num}
-                    </div>
-                    <span className="text-sm font-medium">{s.label}</span>
-                  </div>
-                ))}
+        <div className="max-w-5xl mx-auto mb-8">
+          <div className="flex justify-between items-center relative">
+            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white/10 -z-10" />
+            <div 
+              className="absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-energy-green to-cyber-blue -z-10 transition-all duration-500"
+              style={{ width: `${((currentStep - 1) / (STEPS.length - 1)) * 100}%` }}
+            />
+            
+            {STEPS.map((step) => (
+              <div key={step.id} className="flex flex-col items-center">
+                <motion.div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 ${
+                    currentStep >= step.id 
+                      ? 'bg-gradient-to-r from-energy-green to-cyber-blue text-white' 
+                      : 'bg-white/10 text-white/40'
+                  }`}
+                  animate={{ scale: currentStep === step.id ? 1.2 : 1 }}
+                >
+                  {currentStep > step.id ? <FaCheckCircle /> : step.id}
+                </motion.div>
+                <p className="text-xs text-white/60 text-center max-w-20">{step.title}</p>
+                <p className="text-xs text-white/40">{step.duration}</p>
               </div>
+            ))}
+          </div>
+        </div>
 
-              {selectedPlan && (
-                <div className="border-t border-white/10 pt-6">
-                  <h4 className="font-display text-sm font-bold mb-3">ESTIMATION</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-white/60">Formule</span>
-                      <span className="font-semibold">{plans[selectedPlan].name}</span>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStep}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <GlassCard className="max-w-4xl mx-auto p-8">
+              {currentStep === 1 && (
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-bold mb-6">Type de Maintenance</h2>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Type de service *</label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {['Préventive', 'Corrective', 'Prédictive', 'Contrat annuel'].map(type => (
+                        <button
+                          key={type}
+                          onClick={() => updateFormData('maintenanceType', type)}
+                          className={`p-4 rounded-lg border-2 transition-all ${
+                            formData.maintenanceType === type
+                              ? 'border-energy-green bg-energy-green/10'
+                              : 'border-white/10 hover:border-white/30'
+                          }`}
+                        >
+                          {type}
+                        </button>
+                      ))}
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-white/60">Équipements</span>
-                      <span className="font-semibold">{equipments.reduce((sum, eq) => sum + eq.quantity, 0)}</span>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Urgence *</label>
+                    <div className="grid grid-cols-3 gap-4">
+                      {['Planifiée', 'Sous 1 mois', 'Urgente'].map(urgency => (
+                        <button
+                          key={urgency}
+                          onClick={() => updateFormData('urgency', urgency)}
+                          className={`p-4 rounded-lg border-2 transition-all ${
+                            formData.urgency === urgency
+                              ? 'border-energy-green bg-energy-green/10'
+                              : 'border-white/10 hover:border-white/30'
+                          }`}
+                        >
+                          {urgency}
+                        </button>
+                      ))}
                     </div>
-                    <div className="flex justify-between pt-3 border-t border-white/10">
-                      <span className="text-white/60">Prix mensuel</span>
-                      <span className="font-bold text-energy-green text-lg">
-                        {estimatePrice().toLocaleString()} USD
-                      </span>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Type de contrat</label>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {['Ponctuel', 'Annuel', 'Pluriannuel'].map(contract => (
+                        <button
+                          key={contract}
+                          onClick={() => updateFormData('contractType', contract)}
+                          className={`p-4 rounded-lg border-2 transition-all ${
+                            formData.contractType === contract
+                              ? 'border-energy-green bg-energy-green/10'
+                              : 'border-white/10 hover:border-white/30'
+                          }`}
+                        >
+                          {contract}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
               )}
-            </GlassCard>
-          </div>
 
-          {/* Main Content */}
-          <div className="lg:col-span-3">
-            <form onSubmit={handleSubmit}>
-              {/* Step 1: Plan Selection */}
-              {step === 1 && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                >
-                  <GlassCard className="p-8">
-                    <h2 className="font-display text-3xl font-bold mb-2">
-                      Choisissez Votre <GradientText>Formule</GradientText>
-                    </h2>
-                    <p className="text-white/60 mb-8">Sélectionnez la formule de maintenance qui correspond à vos besoins</p>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                      {(Object.keys(plans) as MaintenancePlan[]).map(planKey => (
-                        <motion.div
-                          key={planKey}
-                          whileHover={{ scale: 1.02 }}
-                          onClick={() => setSelectedPlan(planKey)}
-                          className={`relative p-6 rounded-xl border-2 cursor-pointer transition-all ${
-                            selectedPlan === planKey
-                              ? 'border-energy-green bg-energy-green/5'
+              {currentStep === 2 && (
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-bold mb-6">Équipements à Maintenir</h2>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Type d'équipement *</label>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {['Transformateurs', 'Postes sources', 'Postes de distribution', 'Protections', 'SCADA', 'Câbles'].map(equip => (
+                        <button
+                          key={equip}
+                          onClick={() => toggleArrayValue('equipmentType', equip)}
+                          className={`p-4 rounded-lg border-2 transition-all ${
+                            formData.equipmentType.includes(equip)
+                              ? 'border-energy-green bg-energy-green/10'
                               : 'border-white/10 hover:border-white/30'
                           }`}
                         >
-                          {plans[planKey].popular && (
-                            <div className="absolute -top-3 right-4 px-3 py-1 bg-energy-gradient rounded-full text-xs font-bold text-deep-black">
-                              POPULAIRE
-                            </div>
-                          )}
-                          
-                          <h3 className="font-display text-2xl font-bold mb-2">{plans[planKey].name}</h3>
-                          <div className="text-3xl font-bold mb-4">
-                            <span className={`bg-gradient-to-r ${plans[planKey].color} bg-clip-text text-transparent`}>
-                              {plans[planKey].price}
-                            </span>
-                            {planKey !== 'custom' && <span className="text-sm text-white/60"> USD/mois</span>}
-                          </div>
-                          
-                          <ul className="space-y-2">
-                            {plans[planKey].features.map((feature, i) => (
-                              <li key={i} className="flex items-start gap-2 text-sm">
-                                <FaCheckCircle className="text-energy-green mt-0.5 flex-shrink-0" />
-                                <span className="text-white/70">{feature}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </motion.div>
+                          {equip}
+                        </button>
                       ))}
                     </div>
-                  </GlassCard>
-                </motion.div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Niveau de tension</label>
+                    <select
+                      value={formData.voltageLevel}
+                      onChange={(e) => updateFormData('voltageLevel', e.target.value)}
+                      className="w-full p-3 rounded-lg bg-white/5 border border-white/10 focus:border-energy-green outline-none"
+                    >
+                      <option value="">Sélectionner...</option>
+                      <option value="BT">Basse Tension (BT) - &lt; 1 kV</option>
+                      <option value="MT">Moyenne Tension (MT) - 1-36 kV</option>
+                      <option value="HT">Haute Tension (HT) - 36-150 kV</option>
+                      <option value="THT">Très Haute Tension (THT) - &gt; 150 kV</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Nombre d'équipements</label>
+                    <input
+                      type="text"
+                      value={formData.quantity}
+                      onChange={(e) => updateFormData('quantity', e.target.value)}
+                      placeholder="Ex: 5 transformateurs, 2 postes..."
+                      className="w-full p-3 rounded-lg bg-white/5 border border-white/10 focus:border-energy-green outline-none"
+                    />
+                  </div>
+                </div>
               )}
 
-              {/* Step 2: Equipment Inventory */}
-              {step === 2 && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                >
-                  <GlassCard className="p-8">
-                    <h2 className="font-display text-3xl font-bold mb-2">
-                      Inventaire <GradientText>Équipements</GradientText>
-                    </h2>
-                    <p className="text-white/60 mb-8">Listez les équipements à maintenir</p>
-
-                    <div className="space-y-6">
-                      {equipments.map((equipment, index) => (
-                        <div key={index} className="p-6 bg-white/5 rounded-lg border border-white/10">
-                          <div className="flex justify-between items-center mb-4">
-                            <h4 className="font-semibold">Équipement {index + 1}</h4>
-                            {equipments.length > 1 && (
-                              <button
-                                type="button"
-                                onClick={() => removeEquipment(index)}
-                                className="text-red-400 hover:text-red-300 text-sm"
-                              >
-                                Retirer
-                              </button>
-                            )}
-                          </div>
-                          
-                          <div className="grid md:grid-cols-2 gap-4">
-                            <div>
-                              <label className="block text-sm font-semibold mb-2">Type *</label>
-                              <select
-                                value={equipment.type}
-                                onChange={(e) => updateEquipment(index, 'type', e.target.value)}
-                                required
-                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-energy-green focus:outline-none"
-                              >
-                                <option value="">Sélectionner...</option>
-                                <option value="transformateur">Transformateur</option>
-                                <option value="disjoncteur">Disjoncteur</option>
-                                <option value="protection">Système de protection</option>
-                                <option value="scada">Système SCADA</option>
-                                <option value="poste">Poste source</option>
-                                <option value="autre">Autre</option>
-                              </select>
-                            </div>
-
-                            <div>
-                              <label className="block text-sm font-semibold mb-2">Puissance</label>
-                              <input
-                                type="text"
-                                value={equipment.power}
-                                onChange={(e) => updateEquipment(index, 'power', e.target.value)}
-                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-energy-green focus:outline-none"
-                                placeholder="Ex: 500 kVA"
-                              />
-                            </div>
-
-                            <div>
-                              <label className="block text-sm font-semibold mb-2">Quantité *</label>
-                              <input
-                                type="number"
-                                value={equipment.quantity}
-                                onChange={(e) => updateEquipment(index, 'quantity', parseInt(e.target.value) || 1)}
-                                required
-                                min="1"
-                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-energy-green focus:outline-none"
-                              />
-                            </div>
-
-                            <div>
-                              <label className="block text-sm font-semibold mb-2">Âge</label>
-                              <select
-                                value={equipment.age}
-                                onChange={(e) => updateEquipment(index, 'age', e.target.value)}
-                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-energy-green focus:outline-none"
-                              >
-                                <option value="">Sélectionner...</option>
-                                <option value="0-2">Moins de 2 ans</option>
-                                <option value="2-5">2 à 5 ans</option>
-                                <option value="5-10">5 à 10 ans</option>
-                                <option value="10-20">10 à 20 ans</option>
-                                <option value="20+">Plus de 20 ans</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-
-                      <button
-                        type="button"
-                        onClick={addEquipment}
-                        className="w-full py-3 border-2 border-dashed border-white/20 rounded-lg text-white/60 hover:border-energy-green hover:text-energy-green transition-colors"
-                      >
-                        + Ajouter un équipement
-                      </button>
-                    </div>
-                  </GlassCard>
-                </motion.div>
-              )}
-
-              {/* Step 3: Service Options */}
-              {step === 3 && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                >
-                  <GlassCard className="p-8">
-                    <h2 className="font-display text-3xl font-bold mb-2">
-                      Options <GradientText>Supplémentaires</GradientText>
-                    </h2>
-                    <p className="text-white/60 mb-8">Personnalisez votre contrat avec des services additionnels</p>
-
-                    <div className="space-y-4">
-                      {[
-                        { key: 'preventiveMaintenance', label: 'Maintenance Préventive', desc: 'Visites régulières programmées', price: 'Inclus', locked: true },
-                        { key: 'predictiveMaintenance', label: 'Maintenance Prédictive IA', desc: 'Analyse prédictive des pannes', price: '+200 USD/mois' },
-                        { key: 'emergency24_7', label: 'Support Urgence 24/7', desc: 'Intervention d\'urgence à tout moment', price: '+150 USD/mois' },
-                        { key: 'sparePartsStock', label: 'Stock de Pièces Dédié', desc: 'Pièces de rechange en stock pour votre site', price: '+100 USD/mois' },
-                        { key: 'performanceReporting', label: 'Rapports de Performance', desc: 'Rapports mensuels détaillés', price: '+50 USD/mois' },
-                        { key: 'trainingProgram', label: 'Formation Équipe', desc: 'Formation continue de vos équipes', price: '+80 USD/mois' }
-                      ].map(option => (
-                        <label
-                          key={option.key}
-                          className={`flex items-start gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all ${
-                            formData[option.key as keyof typeof formData]
-                              ? 'border-energy-green bg-energy-green/5'
+              {currentStep === 3 && (
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-bold mb-6">Fréquence & Planning</h2>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Fréquence de maintenance *</label>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      {['Mensuelle', 'Trimestrielle', 'Semestrielle', 'Annuelle'].map(freq => (
+                        <button
+                          key={freq}
+                          onClick={() => updateFormData('frequency', freq)}
+                          className={`p-4 rounded-lg border-2 transition-all ${
+                            formData.frequency === freq
+                              ? 'border-energy-green bg-energy-green/10'
                               : 'border-white/10 hover:border-white/30'
-                          } ${option.locked ? 'opacity-75 cursor-not-allowed' : ''}`}
+                          }`}
                         >
-                          <input
-                            type="checkbox"
-                            checked={formData[option.key as keyof typeof formData] as boolean}
-                            onChange={(e) => setFormData({ ...formData, [option.key]: e.target.checked })}
-                            disabled={option.locked}
-                            className="mt-1 w-5 h-5 rounded border-white/30 text-energy-green focus:ring-energy-green"
-                          />
-                          <div className="flex-1">
-                            <div className="flex items-center justify-between mb-1">
-                              <h4 className="font-semibold">{option.label}</h4>
-                              <span className="text-sm text-energy-green font-bold">{option.price}</span>
-                            </div>
-                            <p className="text-sm text-white/60">{option.desc}</p>
-                          </div>
-                        </label>
+                          {freq}
+                        </button>
                       ))}
                     </div>
-                  </GlassCard>
-                </motion.div>
-              )}
+                  </div>
 
-              {/* Step 4: Contract Details */}
-              {step === 4 && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                >
-                  <GlassCard className="p-8">
-                    <h2 className="font-display text-3xl font-bold mb-2">
-                      Détails du <GradientText>Contrat</GradientText>
-                    </h2>
-                    <p className="text-white/60 mb-8">Définissez la durée et les modalités du contrat</p>
-
-                    <div className="space-y-6">
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div>
-                          <label className="block text-sm font-semibold mb-2">Durée du contrat *</label>
-                          <select
-                            value={formData.contractDuration}
-                            onChange={(e) => setFormData({ ...formData, contractDuration: e.target.value })}
-                            required
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-energy-green focus:outline-none"
-                          >
-                            <option value="12">12 mois (-5%)</option>
-                            <option value="24">24 mois (-10%)</option>
-                            <option value="36">36 mois (-15%)</option>
-                            <option value="48">48 mois (-20%)</option>
-                          </select>
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-semibold mb-2">Date de début souhaitée *</label>
-                          <input
-                            type="date"
-                            value={formData.startDate}
-                            onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                            required
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-energy-green focus:outline-none"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-semibold mb-2">Localisation du site *</label>
-                        <input
-                          type="text"
-                          value={formData.siteLocation}
-                          onChange={(e) => setFormData({ ...formData, siteLocation: e.target.value })}
-                          required
-                          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-energy-green focus:outline-none"
-                          placeholder="Ville, pays"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-semibold mb-2">Restrictions d'accès</label>
-                        <textarea
-                          value={formData.accessRestrictions}
-                          onChange={(e) => setFormData({ ...formData, accessRestrictions: e.target.value })}
-                          rows={3}
-                          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-energy-green focus:outline-none resize-none"
-                          placeholder="Horaires d'accès, badges requis, autorisations spéciales..."
-                        />
-                      </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Créneau préféré</label>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {['Heures ouvrées', 'Nuit', 'Weekend'].map(schedule => (
+                        <button
+                          key={schedule}
+                          onClick={() => updateFormData('preferredSchedule', schedule)}
+                          className={`p-4 rounded-lg border-2 transition-all ${
+                            formData.preferredSchedule === schedule
+                              ? 'border-energy-green bg-energy-green/10'
+                              : 'border-white/10 hover:border-white/30'
+                          }`}
+                        >
+                          {schedule}
+                        </button>
+                      ))}
                     </div>
-                  </GlassCard>
-                </motion.div>
+                  </div>
+                </div>
               )}
 
-              {/* Step 5: Contact & Summary */}
-              {step === 5 && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                >
-                  <GlassCard className="p-8">
-                    <h2 className="font-display text-3xl font-bold mb-2">
-                      Informations de <GradientText>Contact</GradientText>
-                    </h2>
-                    <p className="text-white/60 mb-8">Dernière étape avant l'envoi de votre demande</p>
+              {currentStep === 4 && (
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-bold mb-6">Détails & Contraintes</h2>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Localisation</label>
+                    <input
+                      type="text"
+                      value={formData.location}
+                      onChange={(e) => updateFormData('location', e.target.value)}
+                      placeholder="Ville, région..."
+                      className="w-full p-3 rounded-lg bg-white/5 border border-white/10 focus:border-energy-green outline-none"
+                    />
+                  </div>
 
-                    <div className="space-y-6">
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div>
-                          <label className="block text-sm font-semibold mb-2">Entreprise *</label>
-                          <input
-                            type="text"
-                            value={formData.companyName}
-                            onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                            required
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-energy-green focus:outline-none"
-                            placeholder="Nom de votre entreprise"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-semibold mb-2">Nom complet *</label>
-                          <input
-                            type="text"
-                            value={formData.contactName}
-                            onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
-                            required
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-energy-green focus:outline-none"
-                            placeholder="Votre nom"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-semibold mb-2">Email *</label>
-                          <input
-                            type="email"
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                            required
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-energy-green focus:outline-none"
-                            placeholder="email@entreprise.com"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-semibold mb-2">Téléphone *</label>
-                          <input
-                            type="tel"
-                            value={formData.phone}
-                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                            required
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-energy-green focus:outline-none"
-                            placeholder="+225 XX XX XX XX"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-semibold mb-2">Notes additionnelles</label>
-                        <textarea
-                          value={formData.additionalNotes}
-                          onChange={(e) => setFormData({ ...formData, additionalNotes: e.target.value })}
-                          rows={4}
-                          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-energy-green focus:outline-none resize-none"
-                          placeholder="Informations complémentaires..."
-                        />
-                      </div>
-
-                      {/* Summary */}
-                      <div className="border-t border-white/10 pt-6">
-                        <h3 className="font-display text-xl font-bold mb-4">Récapitulatif</h3>
-                        <div className="space-y-3 text-sm">
-                          <div className="flex justify-between">
-                            <span className="text-white/60">Formule</span>
-                            <span className="font-semibold">{selectedPlan && plans[selectedPlan].name}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-white/60">Équipements</span>
-                            <span className="font-semibold">{equipments.reduce((sum, eq) => sum + eq.quantity, 0)} unités</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-white/60">Durée</span>
-                            <span className="font-semibold">{formData.contractDuration} mois</span>
-                          </div>
-                          <div className="flex justify-between pt-3 border-t border-white/10">
-                            <span className="font-semibold">Prix mensuel estimé</span>
-                            <span className="font-bold text-energy-green text-xl">
-                              {estimatePrice().toLocaleString()} USD
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Contraintes d'accès</label>
+                    <div className="grid grid-cols-2 gap-4">
+                      {['Site isolé', 'Autorisation requise', 'Arrêt de production', 'Conditions météo'].map(constraint => (
+                        <button
+                          key={constraint}
+                          onClick={() => toggleArrayValue('accessConstraints', constraint)}
+                          className={`p-4 rounded-lg border-2 transition-all ${
+                            formData.accessConstraints.includes(constraint)
+                              ? 'border-energy-green bg-energy-green/10'
+                              : 'border-white/10 hover:border-white/30'
+                          }`}
+                        >
+                          {constraint}
+                        </button>
+                      ))}
                     </div>
-                  </GlassCard>
-                </motion.div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Informations complémentaires</label>
+                    <textarea
+                      value={formData.additionalNotes}
+                      onChange={(e) => updateFormData('additionalNotes', e.target.value)}
+                      rows={4}
+                      placeholder="Historique de pannes, équipements critiques, exigences particulières..."
+                      className="w-full p-3 rounded-lg bg-white/5 border border-white/10 focus:border-energy-green outline-none resize-none"
+                    />
+                  </div>
+                </div>
               )}
 
-              {/* Navigation */}
-              <div className="flex justify-between items-center mt-8">
+              {currentStep === 5 && (
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-bold mb-6">Contact & Validation</h2>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Entreprise *</label>
+                      <input
+                        type="text"
+                        value={formData.companyName}
+                        onChange={(e) => updateFormData('companyName', e.target.value)}
+                        className="w-full p-3 rounded-lg bg-white/5 border border-white/10 focus:border-energy-green outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Nom du contact *</label>
+                      <input
+                        type="text"
+                        value={formData.contactName}
+                        onChange={(e) => updateFormData('contactName', e.target.value)}
+                        className="w-full p-3 rounded-lg bg-white/5 border border-white/10 focus:border-energy-green outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Email *</label>
+                      <input
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => updateFormData('email', e.target.value)}
+                        className="w-full p-3 rounded-lg bg-white/5 border border-white/10 focus:border-energy-green outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Téléphone *</label>
+                      <input
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => updateFormData('phone', e.target.value)}
+                        className="w-full p-3 rounded-lg bg-white/5 border border-white/10 focus:border-energy-green outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Date de début souhaitée</label>
+                    <input
+                      type="date"
+                      value={formData.startDate}
+                      onChange={(e) => updateFormData('startDate', e.target.value)}
+                      className="w-full p-3 rounded-lg bg-white/5 border border-white/10 focus:border-energy-green outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Préférence de contact</label>
+                    <div className="grid grid-cols-3 gap-4">
+                      {['Email', 'Téléphone', 'Rendez-vous'].map(pref => (
+                        <button
+                          key={pref}
+                          onClick={() => updateFormData('contactPreference', pref)}
+                          className={`p-4 rounded-lg border-2 transition-all ${
+                            formData.contactPreference === pref
+                              ? 'border-energy-green bg-energy-green/10'
+                              : 'border-white/10 hover:border-white/30'
+                          }`}
+                        >
+                          {pref}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex justify-between mt-8 pt-6 border-t border-slate-700">
                 <button
-                  type="button"
-                  onClick={handleBack}
-                  disabled={step === 1}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
-                    step === 1
-                      ? 'opacity-0 pointer-events-none'
-                      : 'bg-white/5 hover:bg-white/10'
-                  }`}
+                  onClick={handlePrevious}
+                  disabled={currentStep === 1}
+                  className="px-6 py-3 rounded-lg border border-white/10 hover:border-energy-green disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
-                  <FaChevronLeft />
                   Précédent
                 </button>
-
-                {step < 5 ? (
+                
+                {currentStep < STEPS.length ? (
                   <button
-                    type="button"
                     onClick={handleNext}
-                    disabled={step === 1 && !selectedPlan}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
-                      (step === 1 && !selectedPlan)
-                        ? 'bg-white/5 text-white/30 cursor-not-allowed'
-                        : 'bg-energy-gradient text-deep-black hover:scale-105'
-                    }`}
+                    className="px-6 py-3 rounded-lg bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 transition-all"
                   >
                     Suivant
-                    <FaChevronRight />
                   </button>
                 ) : (
-                  <motion.button
-                    type="submit"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-8 py-3 bg-energy-gradient rounded-lg font-bold text-deep-black"
+                  <button
+                    onClick={handleSubmit}
+                    className="px-6 py-3 rounded-lg bg-gradient-to-r from-energy-green to-cyber-blue hover:opacity-90 transition-all"
                   >
                     Envoyer la demande
-                  </motion.button>
+                  </button>
                 )}
               </div>
-            </form>
-          </div>
-        </div>
+            </GlassCard>
+          </motion.div>
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {showSuccess && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50"
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                className="bg-graphite/90 backdrop-blur-xl p-8 rounded-2xl border border-energy-green max-w-md"
+              >
+                <div className="text-center">
+                  <FaCheckCircle className="text-6xl text-energy-green mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold mb-2">Demande envoyée !</h3>
+                  <p className="text-white/70">
+                    Nous vous contacterons sous 24-48h pour discuter de votre contrat de maintenance.
+                  </p>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

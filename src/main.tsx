@@ -13,6 +13,10 @@ import EngineeringPage from './services/EngineeringPage.tsx'
 import InstallationPage from './services/InstallationPage.tsx'
 import MaintenancePage from './services/MaintenancePage.tsx'
 import AuditPage from './services/AuditPage.tsx'
+import CloudInfrastructurePage from './digital/CloudInfrastructurePage.tsx'
+import IoTPlatformPage from './digital/IoTPlatformPage.tsx'
+import DataAnalyticsPage from './digital/DataAnalyticsPage.tsx'
+import MobileAppsPage from './digital/MobileAppsPage.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -29,6 +33,10 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/services/installation" element={<InstallationPage />} />
         <Route path="/services/maintenance" element={<MaintenancePage />} />
         <Route path="/services/audit" element={<AuditPage />} />
+        <Route path="/digital/cloud-infrastructure" element={<CloudInfrastructurePage />} />
+        <Route path="/digital/iot-platform" element={<IoTPlatformPage />} />
+        <Route path="/digital/data-analytics" element={<DataAnalyticsPage />} />
+        <Route path="/digital/mobile-apps" element={<MobileAppsPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

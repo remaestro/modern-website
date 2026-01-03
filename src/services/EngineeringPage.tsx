@@ -5,6 +5,8 @@ import GlassCard from '../components/ui/GlassCard';
 import GradientText from '../components/ui/GradientText';
 import NoiseTexture from '../components/graphics/NoiseTexture';
 import { FaBolt, FaCheckCircle, FaInfoCircle, FaFileUpload } from 'react-icons/fa';
+import { useContactForm, SubmitButton, FormFeedback } from '../components/ContactForm';
+import { sendEmailWithRetry } from '../services/emailService';
 
 const STEPS = [
   { id: 1, title: 'Type de Projet', duration: '30s' },
@@ -91,10 +93,18 @@ function EngineeringPage() {
     setFormData({ ...formData, [field]: updated });
   };
 
-  const handleSubmit = () => {
-    console.log('Form submitted:', formData);
-    localStorage.removeItem('engineeringFormData');
-    alert('Demande envoyée avec succès ! Notre équipe vous contactera sous 24h.');
+  const handleSubmit = async () => {
+    try {
+      await sendEmailWithRetry({
+        formType: 'ENGINEERING',
+        data: formData
+      });
+      localStorage.removeItem('engineeringFormData');
+      alert('✅ Demande d\'étude envoyée ! Nous vous contacterons rapidement.');
+    } catch (error) {
+      console.error('Erreur envoi:', error);
+      alert('❌ Erreur lors de l\'envoi. Veuillez réessayer.');
+    }
   };
 
   const canProceed = () => {

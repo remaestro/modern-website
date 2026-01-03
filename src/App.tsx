@@ -4,6 +4,7 @@ import { useScrollAnimation } from './hooks/useScrollAnimation';
 import GlassCard from './components/ui/GlassCard';
 import GradientText from './components/ui/GradientText';
 import NoiseTexture from './components/graphics/NoiseTexture';
+import ProjectWizard from './components/ProjectWizard';
 import { 
   FaBolt, 
   FaNetworkWired, 
@@ -82,6 +83,7 @@ function AnimatedWord() {
 
 function App() {
   const [scrollY, setScrollY] = useState(0);
+  const [showWizard, setShowWizard] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -93,6 +95,11 @@ function App() {
     <div className="min-h-screen bg-deep-black text-white font-body overflow-x-hidden">
       {/* Noise Texture Overlay */}
       <NoiseTexture />
+      
+      {/* Project Wizard Modal */}
+      <AnimatePresence>
+        {showWizard && <ProjectWizard isOpen={showWizard} onClose={() => setShowWizard(false)} />}
+      </AnimatePresence>
       
       {/* Navigation */}
       <motion.nav 
@@ -234,17 +241,20 @@ function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <motion.button
-              whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(0, 255, 135, 0.5)' }}
-              whileTap={{ scale: 0.95 }}
-              className="relative px-10 py-4 bg-energy-gradient rounded-lg font-bold text-deep-black text-lg overflow-hidden group"
-            >
-              <span className="relative z-10">Découvrir nos solutions</span>
-            </motion.button>
+            <Link to="/products-services">
+              <motion.button
+                whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(0, 255, 135, 0.5)' }}
+                whileTap={{ scale: 0.95 }}
+                className="relative px-10 py-4 bg-energy-gradient rounded-lg font-bold text-deep-black text-lg overflow-hidden group"
+              >
+                <span className="relative z-10">Nos Solutions</span>
+              </motion.button>
+            </Link>
             
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => setShowWizard(true)}
               className="px-10 py-4 backdrop-blur-sm bg-white/5 border-2 border-white/20 rounded-lg font-bold text-lg hover:bg-white/10 hover:border-energy-green/50 transition-all duration-300"
             >
               Démarrer votre projet →

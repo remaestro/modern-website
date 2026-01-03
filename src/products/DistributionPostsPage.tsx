@@ -5,6 +5,7 @@ import GlassCard from '../components/ui/GlassCard';
 import GradientText from '../components/ui/GradientText';
 import NoiseTexture from '../components/graphics/NoiseTexture';
 import { FaBolt, FaCheckCircle } from 'react-icons/fa';
+import { useContactForm, SubmitButton, FormFeedback } from '../components/ContactForm';
 
 function DistributionPostsPage() {
   const [formData, setFormData] = useState({
@@ -22,10 +23,27 @@ function DistributionPostsPage() {
     specificNeeds: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { isSubmitting, showSuccess, showError, errorMessage, submitForm } = useContactForm('DISTRIBUTION_POST');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Demande envoyée avec succès ! Nous vous contacterons sous peu.');
+    const success = await submitForm(formData);
+    if (success) {
+      setFormData({
+        companyName: '',
+        contactName: '',
+        email: '',
+        phone: '',
+        postType: '',
+        voltage: '',
+        capacity: '',
+        quantity: '',
+        location: '',
+        timeline: '',
+        budget: '',
+        specificNeeds: ''
+      });
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

@@ -5,6 +5,9 @@ import GlassCard from '../components/ui/GlassCard';
 import GradientText from '../components/ui/GradientText';
 import NoiseTexture from '../components/graphics/NoiseTexture';
 import { FaChartLine, FaLightbulb } from 'react-icons/fa';
+import { useContactForm, SubmitButton, FormFeedback } from '../components/ContactForm';
+import { sendEmailWithRetry } from '../services/emailService';
+import { emailService } from '../services/emailService';
 
 interface Question {
   id: string;
@@ -176,10 +179,23 @@ function AuditPage() {
     }
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Contact form submitted:', contactData);
-    alert('Merci ! Notre équipe vous contactera sous 24h pour planifier votre audit gratuit.');
+    try {
+      await emailService.sendWithRetry({
+        formType: 'AUDIT',
+        data: {
+          ...contactData,
+          score: calculateScore(),
+          analysis: getScoreAnalysis(calculateScore())
+        }
+      });
+      alert('✅ Demande d\'audit envoyée avec succès ! Nous vous contacterons rapidement.');
+      setContactData({ companyName: '', contactName: '', email: '', phone: '' });
+    } catch (error) {
+      console.error('Erreur soumission:', error);
+      alert('❌ Erreur lors de l\'envoi. Veuillez réessayer.');
+    }
   };
 
   const handleContactChange = (e: React.ChangeEvent<HTMLInputElement>) => {
