@@ -171,7 +171,7 @@ function App() {
             className="w-full h-full object-cover opacity-70"
             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
           >
-            <source src="/modern-website/hero-video.mp4" type="video/mp4" />
+            <source src="/hero-video.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-b from-deep-black/30 via-deep-black/20 to-deep-black/50 z-10" />
           
@@ -370,12 +370,12 @@ function AboutSection() {
           }}
         >
           <div className="flex-shrink-0 w-full h-full bg-repeat-x" style={{ 
-            backgroundImage: `url(/modern-website/assets/bg-solar.png), url(/modern-website/assets/bg-payment.webp)`,
+            backgroundImage: `url(/assets/bg-solar.png), url(/assets/bg-payment.webp)`,
             backgroundSize: '800px auto, 800px auto',
             backgroundPosition: '0 center, 800px center',
           }} />
           <div className="flex-shrink-0 w-full h-full bg-repeat-x" style={{ 
-            backgroundImage: `url(/modern-website/assets/bg-solar.png), url(/modern-website/assets/bg-payment.webp)`,
+            backgroundImage: `url(/assets/bg-solar.png), url(/assets/bg-payment.webp)`,
             backgroundSize: '800px auto, 800px auto',
             backgroundPosition: '0 center, 800px center',
           }} />
@@ -416,7 +416,7 @@ function AboutSection() {
                     });
                   }}
                 >
-                  <source src="/modern-website/assets/about-video-full.mp4" type="video/mp4" />
+                  <source src="/assets/about-video-full.mp4" type="video/mp4" />
                 </video>
 
                 {/* Corner Brackets */}
@@ -468,7 +468,7 @@ function AboutSection() {
                       });
                     }}
                   >
-                    <source src="/modern-website/assets/about-video-full.mp4" type="video/mp4" />
+                    <source src="/assets/about-video-full.mp4" type="video/mp4" />
                   </video>
                   <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-energy-green z-10" />
                   <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-energy-green z-10" />
