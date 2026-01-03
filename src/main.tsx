@@ -20,7 +20,7 @@ import MobileAppsPage from './digital/MobileAppsPage.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter basename="/modern-website">
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/products-services" element={<ProductsServices />} />

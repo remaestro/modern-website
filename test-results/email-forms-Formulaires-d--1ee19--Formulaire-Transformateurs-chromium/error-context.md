@@ -1,0 +1,125 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e5]:
+      - link "DIGITA ENERGY" [ref=e6] [cursor=pointer]:
+        - /url: /modern-website
+      - link "← Retour aux produits" [ref=e8] [cursor=pointer]:
+        - /url: /modern-website/products-services
+  - generic [ref=e11]:
+    - generic [ref=e12]:
+      - img [ref=e13]
+      - heading "Transformateurs HT/MT/BT" [level=1] [ref=e15]
+    - paragraph [ref=e16]: Solutions de transformation électrique haute performance pour vos infrastructures énergétiques
+  - generic [ref=e18]:
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - heading "Caractéristiques" [level=3] [ref=e21]
+        - list [ref=e22]:
+          - listitem [ref=e23]:
+            - img [ref=e24]
+            - generic [ref=e26]: Puissance de 50 kVA à 5000 kVA
+          - listitem [ref=e27]:
+            - img [ref=e28]
+            - generic [ref=e30]: Tensions HT/MT/BT personnalisables
+          - listitem [ref=e31]:
+            - img [ref=e32]
+            - generic [ref=e34]: Rendement optimisé ≥ 98%
+          - listitem [ref=e35]:
+            - img [ref=e36]
+            - generic [ref=e38]: Protection intégrée et monitoring
+          - listitem [ref=e39]:
+            - img [ref=e40]
+            - generic [ref=e42]: Conformité normes internationales
+          - listitem [ref=e43]:
+            - img [ref=e44]
+            - generic [ref=e46]: Garantie constructeur 5 ans
+      - generic [ref=e47]:
+        - heading "Applications" [level=3] [ref=e48]
+        - list [ref=e49]:
+          - listitem [ref=e50]: • Réseaux de distribution électrique
+          - listitem [ref=e51]: • Installations industrielles
+          - listitem [ref=e52]: • Centres commerciaux
+          - listitem [ref=e53]: • Infrastructures publiques
+          - listitem [ref=e54]: • Sites miniers et pétroliers
+    - generic [ref=e56]:
+      - heading "Détaillez Votre Besoin" [level=2] [ref=e57]
+      - paragraph [ref=e58]: Remplissez ce formulaire pour que nos experts puissent vous proposer la solution la plus adaptée à votre projet.
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - generic [ref=e61]:
+            - generic [ref=e62]: Entreprise *
+            - textbox "Nom de votre entreprise" [ref=e63]: Test Company
+          - generic [ref=e64]:
+            - generic [ref=e65]: Contact *
+            - textbox "Votre nom complet" [ref=e66]: John Doe
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - generic [ref=e69]: Email *
+            - textbox "email@entreprise.com" [ref=e70]: john@test.com
+          - generic [ref=e71]:
+            - generic [ref=e72]: Téléphone *
+            - textbox "+225 XX XX XX XX" [active] [ref=e73]: +33 6 12 34 56 78
+        - generic [ref=e74]:
+          - heading "Spécifications Techniques" [level=3] [ref=e75]
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - generic [ref=e78]: Type de Transformateur *
+              - combobox [ref=e79]:
+                - option "Sélectionner..." [selected]
+                - option "HT/MT"
+                - option "MT/BT"
+                - option "HT/BT"
+                - option "Configuration spéciale"
+            - generic [ref=e80]:
+              - generic [ref=e81]: Puissance souhaitée *
+              - combobox [ref=e82]:
+                - option "Sélectionner..." [selected]
+                - option "50 - 100 kVA"
+                - option "100 - 250 kVA"
+                - option "250 - 500 kVA"
+                - option "500 - 1000 kVA"
+                - option "1000 - 2500 kVA"
+                - option "2500+ kVA"
+            - generic [ref=e83]:
+              - generic [ref=e84]: Tension primaire
+              - 'textbox "Ex: 33 kV" [ref=e85]'
+            - generic [ref=e86]:
+              - generic [ref=e87]: Quantité *
+              - spinbutton [ref=e88]
+        - generic [ref=e89]:
+          - heading "Détails du Projet" [level=3] [ref=e90]
+          - generic [ref=e91]:
+            - generic [ref=e92]:
+              - generic [ref=e93]: Installation prévue *
+              - combobox [ref=e94]:
+                - option "Sélectionner..." [selected]
+                - option "Intérieur"
+                - option "Extérieur (poste cabine)"
+                - option "Souterrain"
+            - generic [ref=e95]:
+              - generic [ref=e96]: Délai souhaité *
+              - combobox [ref=e97]:
+                - option "Sélectionner..." [selected]
+                - option "Urgent (< 1 mois)"
+                - option "1 à 3 mois"
+                - option "3 à 6 mois"
+                - option "Plus de 6 mois"
+          - generic [ref=e98]:
+            - generic [ref=e99]: Budget estimé
+            - combobox [ref=e100]:
+              - option "Sélectionner..." [selected]
+              - option "Moins de 50 000 USD"
+              - option "50 000 - 100 000 USD"
+              - option "100 000 - 250 000 USD"
+              - option "250 000 - 500 000 USD"
+              - option "Plus de 500 000 USD"
+          - generic [ref=e101]:
+            - generic [ref=e102]: Besoins spécifiques
+            - textbox "Décrivez vos besoins spécifiques, contraintes techniques, normes particulières, etc." [ref=e103]
+        - generic [ref=e104]:
+          - paragraph [ref=e105]: "* Champs obligatoires"
+          - button "Envoyer ma demande" [ref=e106] [cursor=pointer]
+```
