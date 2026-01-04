@@ -1,6 +1,17 @@
 {
   "routes": [
     {
+      "route": "/*",
+      "redirect": "https://www.digita-energy.com{uri}",
+      "statusCode": 301,
+      "conditions": {
+        "uriPath": ".*"
+      },
+      "headers": {
+        "Host": "digita-energy.com"
+      }
+    },
+    {
       "route": "/api/*",
       "allowedRoles": ["anonymous"]
     }
