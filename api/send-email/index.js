@@ -17,11 +17,11 @@ module.exports = async function (context, req) {
   }
 
   try {
-    const { formType, formData } = req.body;
+    const { to, from, subject, html, replyTo } = req.body;
 
-    if (!formType || !formData) {
+    if (!to || !subject || !html) {
       context.res.status = 400;
-      context.res.body = { error: 'Missing formType or formData' };
+      context.res.body = { error: 'Missing required fields: to, subject, html' };
       return;
     }
 
@@ -36,25 +36,16 @@ module.exports = async function (context, req) {
       },
     });
 
-    // Build email content
-    let emailContent = `
-      <h2>Nouveau formulaire : ${formType}</h2>
-      <hr />
-    `;
-
-    for (const [key, value] of Object.entries(formData)) {
-      emailContent += `<p><strong>${key}:</strong> ${value}</p>`;
-    }
-
     // Send email
     const mailOptions = {
-      from: `"Digita Energy" <${process.env.GMAIL_USER}>`,
-      to: ['infos@digita-energy.com', 'ra@digita-energy.com'],
-      subject: `[${formType}] Nouvelle demande`,
-      html: emailContent,
+      from: from || `"Digita Energy" <${process.env.GMAIL_USER}>`,
+      to: Array.isArray(to) ? to : [to, 'ra@digita-energy.com'], // Always CC ra@digita-energy.com
+      subject,
+      html,
+      replyTo: replyTo || undefined,
     };
 
-    context.log('📧 Sending email...', { formType });
+    context.log('📧 Sending email...', { to, subject });
     await transporter.sendMail(mailOptions);
     context.log('✅ Email sent successfully');
 
