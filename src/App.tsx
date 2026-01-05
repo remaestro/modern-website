@@ -114,12 +114,15 @@ function App() {
           `}
         >
           <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex justify-between items-center">
-            <motion.div 
-              className="text-2xl font-display font-bold tracking-tight"
-              whileHover={{ scale: 1.05 }}
-            >
-              DIGITA <GradientText>ENERGY</GradientText>
-            </motion.div>
+            <Link to="/">
+              <motion.img 
+                src="/logo.png"
+                alt="Digita Energy"
+                className="h-10 w-auto"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              />
+            </Link>
             
             <div className="hidden md:flex gap-8 items-center">
               <a 
@@ -788,9 +791,11 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           <div>
-            <div className="text-2xl font-display font-bold mb-4">
-              DIGITA <GradientText>ENERGY</GradientText>
-            </div>
+            <img 
+              src="/logo.png"
+              alt="Digita Energy"
+              className="h-16 w-auto mb-4 opacity-90"
+            />
             <p className="text-white/60 text-sm leading-relaxed">
               Énergiser l'Avenir de l'Afrique par l'Innovation et la Technologie
             </p>

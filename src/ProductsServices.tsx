@@ -13,8 +13,12 @@ function ProductsServices() {
       {/* Navigation */}
       <nav className="fixed w-full z-50 bg-deep-black/80 backdrop-blur-xl border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex justify-between items-center">
-          <Link to="/" className="text-2xl font-display font-bold tracking-tight hover:scale-105 transition-transform">
-            DIGITA <GradientText>ENERGY</GradientText>
+          <Link to="/" className="hover:scale-105 transition-transform">
+            <img 
+              src="/logo.png"
+              alt="Digita Energy"
+              className="h-10 w-auto"
+            />
           </Link>
           
           <div className="flex gap-8 items-center">
