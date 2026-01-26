@@ -10,7 +10,8 @@ import {
   FaMicrochip,
   FaPlug,
   FaTachometerAlt,
-  FaServer
+  FaServer,
+  FaSatelliteDish
 } from 'react-icons/fa';
 import GlassCard from './components/ui/GlassCard';
 import GradientText from './components/ui/GradientText';
@@ -27,7 +28,8 @@ interface Product {
   image?: string;
 }
 
-const products: Product[] = [
+// Équipements HT/MT
+const equipementsHTMT: Product[] = [
   {
     id: 'cellules-primaires',
     name: 'Cellules Primaires',
@@ -157,6 +159,94 @@ const products: Product[] = [
   }
 ];
 
+// Téléconduite de Réseau
+const teleconduiteProducts: Product[] = [
+  {
+    id: 'easergy-t300',
+    name: 'Easergy T300',
+    description: 'Unité de téléconduite modulaire et évolutive pour la gestion des postes électriques. Solution complète de contrôle-commande.',
+    icon: <FaSatelliteDish />,
+    features: [
+      'RTU modulaire',
+      'Protocoles IEC 61850/DNP3/IEC 104',
+      'Cybersécurité intégrée',
+      'Interface web intuitive'
+    ],
+    brands: ['Schneider Electric'],
+    gradient: 'from-sky-500 to-blue-600'
+  },
+  {
+    id: 'coffret-df1725ied',
+    name: 'Coffret DF1725IED',
+    description: 'Coffret de téléconduite intelligent pour la supervision et le contrôle des équipements de distribution.',
+    icon: <FaServer />,
+    features: [
+      'Protection et contrôle intégrés',
+      'Communication multi-protocoles',
+      'Enregistrement d\'événements',
+      'Diagnostic à distance'
+    ],
+    brands: ['Schneider Electric'],
+    gradient: 'from-indigo-500 to-purple-600'
+  },
+  {
+    id: 'radio-mprl',
+    name: 'Radio MPRL',
+    description: 'Solution radio professionnelle pour la communication longue portée dans les réseaux de distribution électrique.',
+    icon: <FaSatelliteDish />,
+    features: [
+      'Longue portée',
+      'Faible consommation',
+      'Résistant aux interférences',
+      'Cryptage des données'
+    ],
+    brands: ['Motorola Solutions'],
+    gradient: 'from-green-500 to-emerald-600'
+  },
+  {
+    id: 'radio-mds-orbit',
+    name: 'Radio MDS Orbit ECR',
+    description: 'Radio industrielle haute performance pour les applications SCADA et téléconduite des réseaux électriques.',
+    icon: <FaSatelliteDish />,
+    features: [
+      'Débit élevé',
+      'Faible latence',
+      'Sécurité avancée',
+      'Gestion de réseau intégrée'
+    ],
+    brands: ['GE MDS'],
+    gradient: 'from-cyan-500 to-teal-600'
+  },
+  {
+    id: 'dds',
+    name: 'DDS',
+    description: 'Système de distribution de données pour la collecte et transmission des informations du réseau électrique.',
+    icon: <FaServer />,
+    features: [
+      'Acquisition de données',
+      'Transmission sécurisée',
+      'Haute disponibilité',
+      'Évolutivité'
+    ],
+    brands: ['Schneider Electric'],
+    gradient: 'from-amber-500 to-orange-600'
+  },
+  {
+    id: 'iat-ct',
+    name: 'IAT-CT',
+    description: 'Interface d\'acquisition et de télécommande pour le contrôle des équipements de coupure et protection.',
+    icon: <FaMicrochip />,
+    features: [
+      'Acquisition analogique/digitale',
+      'Commandes de téléaction',
+      'Interface homme-machine',
+      'Compatibilité multi-constructeurs'
+    ],
+    brands: ['Schneider Electric'],
+    gradient: 'from-rose-500 to-pink-600'
+  }
+];
+
 function ProductsCatalogPage() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
@@ -207,18 +297,130 @@ function ProductsCatalogPage() {
             <h1 className="font-display text-display font-bold mb-6">
               Nos <GradientText>Produits</GradientText>
             </h1>
-            <p className="text-xl text-white/70 max-w-3xl mx-auto">
+            <p className="text-xl text-white/70 max-w-3xl mx-auto mb-10">
               Une gamme complète d'équipements électriques haute et moyenne tension, fournis par les leaders mondiaux de l'industrie
             </p>
+
+            {/* Navigation Tabs */}
+            <div className="flex justify-center gap-4 flex-wrap">
+              <a
+                href="#equipements-htmt"
+                className="px-6 py-3 bg-energy-green/10 border border-energy-green/30 rounded-full text-energy-green font-bold hover:bg-energy-green hover:text-deep-black transition-all duration-300 flex items-center gap-2"
+              >
+                <FaCubes /> Équipements HT/MT
+              </a>
+              <a
+                href="#teleconduite"
+                className="px-6 py-3 bg-cyber-blue/10 border border-cyber-blue/30 rounded-full text-cyber-blue font-bold hover:bg-cyber-blue hover:text-deep-black transition-all duration-300 flex items-center gap-2"
+              >
+                <FaSatelliteDish /> Téléconduite de Réseau
+              </a>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Products Grid */}
-      <section className="relative py-16">
+      {/* Section Équipements HT/MT */}
+      <section id="equipements-htmt" className="relative py-16 scroll-mt-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-10"
+          >
+            <h2 className="font-display text-3xl font-bold mb-3">
+              <GradientText>Équipements HT/MT</GradientText>
+            </h2>
+            <p className="text-white/60 max-w-2xl">
+              Appareillage électrique haute et moyenne tension pour postes de transformation et réseaux de distribution
+            </p>
+          </motion.div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product, index) => (
+            {equipementsHTMT.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <GlassCard
+                  className="p-6 h-full cursor-pointer group"
+                  hover
+                  onClick={() => setSelectedProduct(product)}
+                >
+                  {/* Product Image or Icon */}
+                  <div className={`relative h-40 rounded-xl mb-4 overflow-hidden bg-gradient-to-br ${product.gradient} bg-opacity-20`}>
+                    {product.image ? (
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="text-6xl text-white/30 group-hover:text-white/50 group-hover:scale-110 transition-all duration-300">
+                          {product.icon}
+                        </div>
+                      </div>
+                    )}
+                    <div className={`absolute inset-0 bg-gradient-to-t ${product.gradient} opacity-20`} />
+                  </div>
+
+                  {/* Content */}
+                  <h3 className="font-display text-xl font-bold mb-2 group-hover:text-energy-green transition-colors">
+                    {product.name}
+                  </h3>
+                  <p className="text-white/60 text-sm mb-4 line-clamp-2">
+                    {product.description}
+                  </p>
+
+                  {/* Brands */}
+                  <div className="flex flex-wrap gap-2">
+                    {product.brands.slice(0, 3).map((brand, idx) => (
+                      <span
+                        key={idx}
+                        className="px-2 py-1 text-xs bg-white/5 border border-white/10 rounded-full text-white/50"
+                      >
+                        {brand}
+                      </span>
+                    ))}
+                    {product.brands.length > 3 && (
+                      <span className="px-2 py-1 text-xs text-white/30">
+                        +{product.brands.length - 3}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* View More */}
+                  <div className="mt-4 text-energy-green text-sm font-medium flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Voir détails <span>→</span>
+                  </div>
+                </GlassCard>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section Téléconduite de Réseau */}
+      <section id="teleconduite" className="relative py-16 bg-graphite/20 scroll-mt-24">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-10"
+          >
+            <h2 className="font-display text-3xl font-bold mb-3">
+              <GradientText>Téléconduite de Réseau</GradientText>
+            </h2>
+            <p className="text-white/60 max-w-2xl">
+              Solutions de supervision, contrôle-commande et communication pour la gestion à distance des réseaux électriques
+            </p>
+          </motion.div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {teleconduiteProducts.map((product, index) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 30 }}
