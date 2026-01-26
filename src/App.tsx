@@ -5,14 +5,15 @@ import GlassCard from './components/ui/GlassCard';
 import GradientText from './components/ui/GradientText';
 import NoiseTexture from './components/graphics/NoiseTexture';
 import ProjectWizard from './components/ProjectWizard';
-import { 
-  FaBolt, 
-  FaNetworkWired, 
-  FaShieldAlt, 
+import {
+  FaBolt,
+  FaNetworkWired,
+  FaShieldAlt,
   FaUsers,
   FaStar,
   FaRocket,
-  FaHeart
+  FaHeart,
+  FaGraduationCap
 } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 
@@ -114,46 +115,62 @@ function App() {
           `}
         >
           <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex justify-between items-center">
-            <motion.div 
-              className="text-2xl font-display font-bold tracking-tight"
-              whileHover={{ scale: 1.05 }}
-            >
-              DIGITA <GradientText>ENERGY</GradientText>
-            </motion.div>
+            <Link to="/">
+              <motion.div
+                className="text-2xl font-display font-bold tracking-tight cursor-pointer"
+                whileHover={{ scale: 1.05 }}
+              >
+                DIGITA <GradientText>ENERGY</GradientText>
+              </motion.div>
+            </Link>
             
             <div className="hidden md:flex gap-8 items-center">
-              <a 
-                href="#about" 
+              <a
+                href="#about"
                 className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200"
               >
                 À propos
               </a>
-              <a 
-                href="#services" 
+              <a
+                href="#services"
                 className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200"
               >
                 Solutions
               </a>
-              <Link 
-                to="/products-services" 
+              <Link
+                to="/products-catalog"
                 className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200"
               >
-                Produits & Services
+                Produits
               </Link>
-              <a 
-                href="#vision" 
+              <Link
+                to="/products-services"
                 className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200"
               >
-                Vision
-              </a>
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="relative bg-energy-gradient px-6 py-2.5 rounded-lg text-sm font-bold text-deep-black overflow-hidden group"
+                Services
+              </Link>
+              <Link
+                to="/training"
+                className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200"
               >
-                <span className="relative z-10">Contact</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-cyber-blue to-energy-green opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </motion.button>
+                Formation
+              </Link>
+              <Link
+                to="/partners"
+                className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200"
+              >
+                Partenaires
+              </Link>
+              <Link to="/contact">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative bg-energy-gradient px-6 py-2.5 rounded-lg text-sm font-bold text-deep-black overflow-hidden group"
+                >
+                  <span className="relative z-10">Contact</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyber-blue to-energy-green opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </motion.button>
+              </Link>
             </div>
           </div>
         </div>
@@ -338,8 +355,14 @@ function App() {
       {/* Vision Section */}
       <VisionSection />
 
+      {/* Projects Section */}
+      <ProjectsSection />
+
       {/* Values Section */}
       <ValuesSection />
+
+      {/* Training Section */}
+      <TrainingSection />
 
       {/* CTA Section */}
       <CTASection />
@@ -663,6 +686,105 @@ function VisionSection() {
   );
 }
 
+// Projects Section
+function ProjectsSection() {
+  const { ref, isVisible } = useScrollAnimation(0.2);
+
+  const projects = [
+    { name: 'TOUR F', category: 'Infrastructure' },
+    { name: 'Amélioration QP Abidjan Sud - Téléconduite 75 postes', category: 'Téléconduite' },
+    { name: 'Digitalisation des rondes SIR', category: 'Digital' },
+    { name: 'FLUENCE Phase 1 & 2', category: 'Énergie' },
+    { name: 'NEDA', category: 'Infrastructure' },
+    { name: 'Réhabilitation poste KARA & APKATAME', category: 'Réhabilitation' },
+    { name: 'Extension poste source Riviera', category: 'Extension' },
+    { name: 'Extension poste source Djibi', category: 'Extension' },
+    { name: 'Extension poste source Plateau', category: 'Extension' },
+    { name: 'Extension poste source Bia-Nord', category: 'Extension' },
+    { name: 'Extension poste source Anani', category: 'Extension' },
+    { name: 'Sécurisation réseau HT Ouaga 1', category: 'Sécurisation' },
+    { name: 'Étude de sélectivité', category: 'Études' },
+    { name: 'Extension poste CIM IVOIRE', category: 'Extension' },
+    { name: 'Construction poste de livraison SONIMEX', category: 'Construction' },
+    { name: 'Extension Poste MCSET Patte d\'oie', category: 'Extension' }
+  ];
+
+  const getCategoryColor = (category: string) => {
+    const colors: Record<string, string> = {
+      'Infrastructure': 'bg-energy-green/20 text-energy-green',
+      'Téléconduite': 'bg-cyber-blue/20 text-cyber-blue',
+      'Digital': 'bg-plasma-purple/20 text-plasma-purple',
+      'Énergie': 'bg-orange-500/20 text-orange-400',
+      'Réhabilitation': 'bg-amber-500/20 text-amber-400',
+      'Extension': 'bg-emerald-500/20 text-emerald-400',
+      'Sécurisation': 'bg-red-500/20 text-red-400',
+      'Études': 'bg-indigo-500/20 text-indigo-400',
+      'Construction': 'bg-teal-500/20 text-teal-400'
+    };
+    return colors[category] || 'bg-white/10 text-white/70';
+  };
+
+  return (
+    <section ref={ref} className="relative py-24 lg:py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-deep-black via-graphite/30 to-deep-black" />
+
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <div className="inline-block px-4 py-2 mb-6 backdrop-blur-sm bg-energy-green/10 border border-energy-green/30 rounded-full">
+            <span className="text-energy-green text-sm font-bold tracking-wider uppercase">
+              Nos Réalisations
+            </span>
+          </div>
+
+          <h2 className="font-display text-display font-bold mb-4">
+            Projets <GradientText>Réalisés</GradientText>
+          </h2>
+
+          <p className="text-xl text-white/60 max-w-3xl mx-auto">
+            Une expertise prouvée à travers des projets d'envergure en Afrique de l'Ouest
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {projects.map((project, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+            >
+              <GlassCard className="p-4 h-full" hover>
+                <span className={`inline-block px-2 py-1 text-xs font-bold rounded-full mb-3 ${getCategoryColor(project.category)}`}>
+                  {project.category}
+                </span>
+                <h3 className="text-sm font-medium leading-tight">
+                  {project.name}
+                </h3>
+              </GlassCard>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isVisible ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="text-center mt-12"
+        >
+          <p className="text-white/50 text-sm">
+            Et bien d'autres projets réalisés avec succès...
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 // Values Section
 function ValuesSection() {
   const { ref, isVisible } = useScrollAnimation(0.2);
@@ -730,6 +852,98 @@ function ValuesSection() {
   );
 }
 
+// Training Section
+function TrainingSection() {
+  const { ref, isVisible } = useScrollAnimation(0.2);
+
+  return (
+    <section ref={ref} className="relative py-24 lg:py-32 bg-graphite/30">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Content */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="inline-block px-4 py-2 mb-6 backdrop-blur-sm bg-energy-green/10 border border-energy-green/30 rounded-full">
+              <span className="text-energy-green text-sm font-bold tracking-wider uppercase flex items-center gap-2">
+                <FaGraduationCap /> Formations
+              </span>
+            </div>
+
+            <h2 className="font-display text-display font-bold mb-6">
+              Besoin d'une <GradientText>Formation ?</GradientText>
+            </h2>
+
+            <p className="text-lg text-white/70 mb-8 leading-relaxed">
+              Nos experts se tiennent à vos côtés pour vous faire monter en compétence sur les technologies et systèmes électriques les plus avancés.
+            </p>
+
+            <ul className="space-y-3 mb-8">
+              {[
+                'Protection Réseaux',
+                'Téléconduite et Télécommunication HTA/BT',
+                'Exploitation et Maintenance Postes HTB/HT',
+                'Automatismes et Protections'
+              ].map((item, index) => (
+                <motion.li
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isVisible ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                  className="flex items-center gap-3 text-white/80"
+                >
+                  <span className="text-energy-green">→</span>
+                  {item}
+                </motion.li>
+              ))}
+            </ul>
+
+            <Link to="/training">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-energy-gradient rounded-lg font-bold text-deep-black text-lg"
+              >
+                Voir toutes les formations →
+              </motion.button>
+            </Link>
+          </motion.div>
+
+          {/* Visual */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="hidden lg:block"
+          >
+            <GlassCard className="p-8 text-center">
+              <FaGraduationCap className="text-8xl text-energy-green mx-auto mb-6" />
+              <h3 className="font-display text-2xl font-bold mb-4">
+                7 Formations Disponibles
+              </h3>
+              <p className="text-white/70 mb-6">
+                Des programmes conçus par des experts pour les professionnels du secteur énergétique
+              </p>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="p-3 bg-white/5 rounded-lg">
+                  <div className="text-energy-green font-bold text-lg">100+</div>
+                  <div className="text-white/60">Professionnels formés</div>
+                </div>
+                <div className="p-3 bg-white/5 rounded-lg">
+                  <div className="text-cyber-blue font-bold text-lg">98%</div>
+                  <div className="text-white/60">Satisfaction</div>
+                </div>
+              </div>
+            </GlassCard>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // CTA Section
 function CTASection() {
   return (
@@ -760,20 +974,23 @@ function CTASection() {
         </p>
 
         <div className="flex gap-4 justify-center flex-wrap">
+          <Link to="/contact">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-10 py-4 bg-energy-gradient rounded-lg font-bold text-deep-black text-lg"
+            >
+              Planifier une Consultation
+            </motion.button>
+          </Link>
+
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-10 py-4 bg-energy-gradient rounded-lg font-bold text-deep-black text-lg"
-          >
-            Planifier une Consultation
-          </motion.button>
-          
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-10 py-4 backdrop-blur-sm bg-white/5 border-2 border-white/20 rounded-lg font-bold text-lg hover:bg-white/10 transition-all"
+            whileHover={{ scale: 1.02 }}
+            className="px-10 py-4 backdrop-blur-sm bg-white/5 border-2 border-white/10 rounded-lg font-bold text-lg text-white/50 cursor-not-allowed"
+            disabled
           >
             Télécharger les Études de Cas
+            <span className="block text-xs font-normal mt-1">Bientôt disponible</span>
           </motion.button>
         </div>
       </div>
@@ -789,7 +1006,7 @@ function Footer() {
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           <div>
             <div className="text-2xl font-display font-bold mb-4">
-              DIGITA <GradientText>ENERGY</GradientText>
+              DIGITA <span className="bg-gradient-to-r from-energy-green via-white to-cyber-blue bg-clip-text text-transparent">ENERGY</span>
             </div>
             <p className="text-white/60 text-sm leading-relaxed">
               Énergiser l'Avenir de l'Afrique par l'Innovation et la Technologie
@@ -817,8 +1034,16 @@ function Footer() {
           <div>
             <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider">Contact</h4>
             <ul className="space-y-2 text-sm text-white/60">
-              <li>contact@digita-energy.com</li>
-              <li>+225 XX XX XX XX XX</li>
+              <li>
+                <a href="mailto:infos@digita-energy.com" className="hover:text-energy-green transition-colors">
+                  infos@digita-energy.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+22507071881889" className="hover:text-energy-green transition-colors">
+                  +225 07 07 18 81 89
+                </a>
+              </li>
             </ul>
           </div>
         </div>

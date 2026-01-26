@@ -21,14 +21,14 @@ function ProductsServices() {
             <Link to="/" className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200">
               Accueil
             </Link>
-            <Link to="/#about" className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200">
-              À propos
-            </Link>
-            <Link to="/#services" className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200">
-              Services
-            </Link>
             <Link to="/products-services" className="text-sm font-medium text-energy-green">
               Produits & Services
+            </Link>
+            <Link to="/partners" className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200">
+              Partenaires
+            </Link>
+            <Link to="/contact" className="text-sm font-medium text-white/70 hover:text-energy-green transition-colors duration-200">
+              Contact
             </Link>
           </div>
         </div>
@@ -284,13 +284,15 @@ function ProductsServices() {
           <p className="text-xl text-white/70 mb-10">
             Discutons de vos besoins spécifiques et construisons ensemble la solution idéale
           </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-10 py-4 bg-energy-gradient rounded-lg font-bold text-deep-black text-lg"
-          >
-            Contactez-Nous
-          </motion.button>
+          <Link to="/contact">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-10 py-4 bg-energy-gradient rounded-lg font-bold text-deep-black text-lg"
+            >
+              Contactez-Nous
+            </motion.button>
+          </Link>
         </div>
       </section>
     </div>

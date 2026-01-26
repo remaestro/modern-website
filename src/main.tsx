@@ -17,6 +17,10 @@ import CloudInfrastructurePage from './digital/CloudInfrastructurePage.tsx'
 import IoTPlatformPage from './digital/IoTPlatformPage.tsx'
 import DataAnalyticsPage from './digital/DataAnalyticsPage.tsx'
 import MobileAppsPage from './digital/MobileAppsPage.tsx'
+import ContactPage from './ContactPage.tsx'
+import TrainingPage from './TrainingPage.tsx'
+import PartnersPage from './PartnersPage.tsx'
+import ProductsCatalogPage from './ProductsCatalogPage.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -37,6 +41,10 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/digital/iot-platform" element={<IoTPlatformPage />} />
         <Route path="/digital/data-analytics" element={<DataAnalyticsPage />} />
         <Route path="/digital/mobile-apps" element={<MobileAppsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/training" element={<TrainingPage />} />
+        <Route path="/partners" element={<PartnersPage />} />
+        <Route path="/products-catalog" element={<ProductsCatalogPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
